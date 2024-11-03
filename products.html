@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/c/font_4731064_jvjmjota6g.css">
+
+    <title>微信风格底部导航栏示例</title>
+    <style>
+        /* 重置样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* 内容区域 */
+        .content {
+            flex: 1;
+            margin:0 20px;
+            text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+
+        /*文创类名*/
+        .classes {
+            margin:10px 0;
+            height: 50px;
+            text-align: center;
+            background-color: #cdae59;
+            font-size: 20px;
+            color: #ffffff;
+            line-height: 50px;
+        }
+
+        /* 底部导航栏样式 */
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+            box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .item {
+            margin: 0 auto;
+            width: 48%;
+            height: 300px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border: #ddd 1px solid;
+            margin-bottom: 10px;
+        }
+
+        .picture {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background-color: #ff9a9a;
+        }
+        
+        .title {
+            margin: 10px 0;
+        }
+           
+
+        .footer-nav a {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            color: #333;
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .footer-nav a:hover {
+            color: #1AAD19; /* 微信绿色 */
+        }
+
+        /* 图标样式，使用字体图标 */
+        .footer-nav a i {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        /* 激活状态样式 */
+        .footer-nav a.active {
+            color: #ffbb00;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 内容区域 -->
+        <img src="https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/products/%E9%9D%92%E9%93%9C%E6%96%87%E5%88%9B" style="width: 100%;">
+       
+        <div style="width: 100%;text-align: center;margin-top: 5px;color: #3a3a3a;font-size: 15px;margin:10px 0;">欢迎光临，这里是青铜文创店，感谢您的支持！</div>
+
+        <div class="classes">仿古青铜器摆件</div>
+        <div class="content">
+            <div class="item">
+                <div  class="picture"></div>
+                <div class="title">青铜文创摆件</div>   
+                <div class="title">￥500</div> 
+            </div>
+            <div class="item">
+                <div  class="picture"></div>
+                <div class="title">青铜文创摆件</div>   
+                <div class="title">￥500</div> 
+            </div>
+            <div class="item">
+                <div  class="picture"></div>
+                <div class="title">青铜文创摆件</div>  
+                <div class="title">￥500</div>  
+            </div>
+            <div class="item">
+                <div  class="picture"></div>
+                <div class="title">青铜文创摆件</div>
+                <div class="title">￥500</div>   
+            </div>
+            
+        </div>
+
+        <div class="classes">青铜徽章</div>
+        <div class="content">
+            <div class="item">
+                <div  class="picture"></div>
+                <div class="title">青铜文创摆件</div>   
+                <div class="title">￥500</div> 
+            </div>
+            <div class="item">
+                <div  class="picture"></div>
+                <div class="title">青铜文创摆件</div>   
+                <div class="title">￥500</div> 
+            </div>
+            <div class="item">
+                <div  class="picture"></div>
+                <div class="title">青铜文创摆件</div>  
+                <div class="title">￥500</div>  
+            </div>
+            <div class="item">
+                <div  class="picture"></div>
+                <div class="title">青铜文创摆件</div>
+                <div class="title">￥500</div>   
+            </div>
+            
+        </div>
+
+        <div class="classes">青铜笔记</div>
+        <div class="content">
+            <div class="item">
+                <div  class="picture"></div>
+                <div class="title">青铜文创摆件</div>   
+                <div class="title">￥500</div> 
+            </div>
+            <div class="item">
+                <div  class="picture"></div>
+                <div class="title">青铜文创摆件</div>   
+                <div class="title">￥500</div> 
+            </div>
+            <div class="item">
+                <div  class="picture"></div>
+                <div class="title">青铜文创摆件</div>  
+                <div class="title">￥500</div>  
+            </div>
+            <div class="item">
+                <div  class="picture"></div>
+                <div class="title">青铜文创摆件</div>
+                <div class="title">￥500</div>   
+            </div>
+            
+        </div>
+
+        <div style="width: 100%; display: flex; flex-wrap: wrap; justify-content: center; color: #909090;">
+            <div style="width: 100%;text-align: center;margin-top: 5px;">我们有优秀的文创产品</div>
+            <div style="width: 100%;text-align: center;margin-top: 5px;">高质量的服务质量</div>
+            <div style="width: 100%;text-align: center;margin-top: 5px;">欢迎联系我们进行合作</div>
+        </div>
+        
+
+        <div style="height: 80px;"></div>
+
+    <!-- 底部导航栏 -->
+    <nav class="footer-nav">
+        <a href="#" >
+            <i class="iconfont icon-shouye"></i> <!-- 房子图标 -->
+            首页
+        </a>
+        <a href="#">
+            <i class="iconfont icon-pot"></i> <!-- 人物图标 -->
+            青铜器
+        </a>
+        <a href="#" class="active">
+            <i class="iconfont icon-gudai"></i> <!-- 加号图标 -->
+            文创产品
+        </a>
+        <a href="#">
+            <i class="iconfont icon-ziliaoku"></i> <!-- 对话框图标 -->
+            资料推荐
+        </a>
+        
+    </nav>
+
+</body>
+</html>
