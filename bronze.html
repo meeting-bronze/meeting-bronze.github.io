@@ -18,13 +18,14 @@
 
         body {
             font-family: Arial, sans-serif;
-            border: #888 solid 1px;
+            border: 1px solid #888;
             flex-direction: column;
-            min-height: 93vh;
+            min-height: 91vh;
             background-image:url("https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E6%97%B6%E9%97%B4%E8%BD%B4%E8%83%8C%E6%99%AF");
             background-repeat: no-repeat;
             background-size: cover; /* 将图片宽度设置为页面宽度 */
             background-position: center; /* 图片居中 */
+            max-width: 375px;
         }
 
         /* 内容区域 */
@@ -68,8 +69,9 @@
         }
 
         .dynamic{
-            width:14vw;
-            height:5vh;
+            border:#000000 1px solid;
+            width:7vw;
+            height:4vh;
             position: absolute;
         }
 
@@ -84,48 +86,48 @@
 <body>
 
     <!-- 内容区域 -->
+    <div style="width: 100%; height: 100%;position: relative; ">
+    <a href=""><div class="dynamic" style="left:  5vw; top: 20vh;"></div></a>   <!-- 夏 -->
+    <a href=""><div class="dynamic" style="left: 18vw; top: 20vh;"></div></a>   <!-- 商 -->
+    <a href=""><div class="dynamic" style="left: 33vw; top: 20vh;"></div></a>   <!-- 周 -->
+    <a href=""><div class="dynamic" style="left: 43vw; top: 20vh;"></div></a>   <!-- 春秋 -->
+    <a href=""><div class="dynamic" style="left: 43vw; top: 30vh;"></div></a>   <!-- 战国 -->
+    <a href=""><div class="dynamic" style="left: 33vw; top: 30vh;"></div></a>   <!-- 秦 -->
+    <a href=""><div class="dynamic" style="left: 18vw; top: 30vh;"></div></a>   <!-- 汉 -->  
+    <a href=""><div class="dynamic" style="left: 8vw; top: 30vh;"></div></a>   <!-- 三国 -->
+    <a href=""><div class="dynamic" style="left:  7vw; top: 39vh;"></div></a>   <!-- 晋 -->
+    <a href=""><div class="dynamic" style="left: 18vw; top: 39vh;"></div></a>   <!-- 南北朝 -->
+    <a href=""><div class="dynamic" style="left: 33vw; top: 39vh;"></div></a>   <!-- 隋 -->
+    <a href=""><div class="dynamic" style="left: 43vw; top: 39vh;"></div></a>   <!-- 唐 -->
+    <a href=""><div class="dynamic" style="left: 43vw; top: 48vh;"></div></a>   <!-- 五代十国 -->
+    <a href=""><div class="dynamic" style="left: 33vw; top: 48vh;"></div></a>   <!-- 辽 -->
+    <a href=""><div class="dynamic" style="left: 18vw; top: 48vh;"></div></a>   <!-- 宋 -->
+    <a href=""><div class="dynamic" style="left: 7vw; top: 48vh;"></div></a>   <!-- 金 -->
+    <a href=""><div class="dynamic" style="left: 7vw; top: 58vh;"></div></a>   <!-- 元 -->
+    <a href=""><div class="dynamic" style="left: 18vw; top: 58vh;"></div></a>   <!-- 明 -->
+    <a href=""><div class="dynamic" style="left: 33vw; top: 58vh;"></div></a>   <!-- 清 -->
+</div>
+
+   <!-- 底部导航栏 -->
+   <nav class="footer-nav">
+    <a href="https://meeting-bronze.github.io/index" >
+        <i class="iconfont icon-shouye"></i> <!-- 房子图标 -->
+        首页
+    </a>
+    <a href="https://meeting-bronze.github.io/bronze" class="active">
+        <i class="iconfont icon-pot"></i> <!-- 人物图标 -->
+        青铜器
+    </a>
+    <a href="https://meeting-bronze.github.io/products">
+        <i class="iconfont icon-gudai"></i> <!-- 加号图标 -->
+        文创产品
+    </a>
+    <a href="https://meeting-bronze.github.io/information">
+        <i class="iconfont icon-ziliaoku"></i> <!-- 对话框图标 -->
+        资料推荐
+    </a>
     
-    <a href=""><div class="dynamic" style="left:  4vw; top: 20vh;"></div></a>   <!-- 夏 -->
-    <a href=""><div class="dynamic" style="left: 30vw; top: 20vh;"></div></a>   <!-- 商 -->
-    <a href=""><div class="dynamic" style="left: 59vw; top: 20vh;"></div></a>   <!-- 周 -->
-    <a href=""><div class="dynamic" style="left: 79vw; top: 20vh;"></div></a>   <!-- 春秋 -->
-    <a href=""><div class="dynamic" style="left: 10vw; top: 30vh;"></div></a>   <!-- 战国 -->
-    <a href=""><div class="dynamic" style="left: 30vw; top: 30vh;"></div></a>   <!-- 秦 -->
-    <a href=""><div class="dynamic" style="left: 59vw; top: 30vh;"></div></a>   <!-- 汉 -->  
-    <a href=""><div class="dynamic" style="left: 79vw; top: 30vh;"></div></a>   <!-- 三国 -->
-    <a href=""><div class="dynamic" style="left:  6vw; top: 39vh;"></div></a>   <!-- 晋 -->
-    <a href=""><div class="dynamic" style="left: 30vw; top: 39vh;"></div></a>   <!-- 南北朝 -->
-    <a href=""><div class="dynamic" style="left: 59vw; top: 39vh;"></div></a>   <!-- 隋 -->
-    <a href=""><div class="dynamic" style="left: 79vw; top: 39vh;"></div></a>   <!-- 唐 -->
-    <a href=""><div class="dynamic" style="left: 10vw; top: 48vh;"></div></a>   <!-- 五代十国 -->
-    <a href=""><div class="dynamic" style="left: 30vw; top: 48vh;"></div></a>   <!-- 辽 -->
-    <a href=""><div class="dynamic" style="left: 59vw; top: 48vh;"></div></a>   <!-- 宋 -->
-    <a href=""><div class="dynamic" style="left: 79vw; top: 48vh;"></div></a>   <!-- 金 -->
-    <a href=""><div class="dynamic" style="left: 10vw; top: 58vh;"></div></a>   <!-- 元 -->
-    <a href=""><div class="dynamic" style="left: 30vw; top: 58vh;"></div></a>   <!-- 明 -->
-    <a href=""><div class="dynamic" style="left: 59vw; top: 58vh;"></div></a>   <!-- 清 -->
-
-
-    <!-- 底部导航栏 -->
-    <nav class="footer-nav">
-        <a href="https://meeting-bronze.github.io/index" >
-            <i class="iconfont icon-shouye"></i> <!-- 房子图标 -->
-            首页
-        </a>
-        <a href="#" class="active">
-            <i class="iconfont icon-pot"></i> <!-- 人物图标 -->
-            青铜器
-        </a>
-        <a href="https://meeting-bronze.github.io/products" >
-            <i class="iconfont icon-gudai"></i> <!-- 加号图标 -->
-            文创产品
-        </a>
-        <a href="https://meeting-bronze.github.io/information">
-            <i class="iconfont icon-ziliaoku"></i> <!-- 对话框图标 -->
-            资料推荐
-        </a>
-        
-    </nav>
+</nav>
 
 </body>
 </html>
