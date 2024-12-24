@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/c/font_4731064_jvjmjota6g.css">
+    <title>周朝青铜器</title>
+    <style>
+        /* 重置样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            max-width: 375px;
+            margin: 0 auto;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            border: #888 solid 1px;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content {
+            flex: 1;
+            background-color: #faf8f8;
+            text-align: center; 
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        .content a {
+            width: 48%;
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 3%;
+            color: black;
+            text-decoration: none;
+            transition: transform 0.3s;
+            cursor: pointer;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .content a:hover {
+            transform: scale(1.05);
+        }
+
+        .item-image {
+            width: 100%;
+            object-fit: cover;
+            aspect-ratio: 1;
+        }
+
+        .item-introduction {
+            width: 100%;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 20px;
+        }
+
+        /* 底部导航栏样式 */
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+            box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-nav a {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            color: #333;
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .footer-nav a:hover {
+            color: #1AAD19;
+        }
+
+        .footer-nav a i {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .footer-nav a.active {
+            color: #ffbb00;
+        }
+
+        /* 底部分页样式 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .pagination span {
+            margin: 0 10px;
+        }
+
+        .pagination button {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .pagination button:disabled {
+            color: #ddd;
+            cursor: not-allowed;
+        }
+
+        /* 弹窗样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 375px;
+            border-radius: 10px;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .modal-content p {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <img src="https://yty93669.oss-cn-beijing.aliyuncs.com/青铜奇缘/bronze/单页标题" style="width:100%;height:auto">
+    <div style="width:100%;text-align: center;font-size: 20px;margin:10px 0">-周朝青铜器-</div>
+
+    <div class="content" id="content">
+        <!-- 图片内容将通过JavaScript动态添加 -->
+    </div>
+    
+    <!-- 分页按钮容器 -->
+    <div class="pagination" id="pagination">
+        <button id="prevBtn" onclick="changePage(-1)" disabled>&lt;</button>
+        <span id="pageInfo">1 / 1</span>
+        <button id="nextBtn" onclick="changePage(1)">&gt;</button>
+    </div>
+    
+    <div style="height: 80px;"></div>
+    
+    <!-- 底部导航栏 -->
+   <nav class="footer-nav">
+    <a href="https://meeting-bronze.github.io/index" >
+        <i class="iconfont icon-shouye"></i> <!-- 房子图标 -->
+        首页
+    </a>
+    <a href="https://meeting-bronze.github.io/bronze" class="active">
+        <i class="iconfont icon-pot"></i> <!-- 人物图标 -->
+        青铜器
+    </a>
+    <a href="https://meeting-bronze.github.io/products">
+        <i class="iconfont icon-gudai"></i> <!-- 加号图标 -->
+        文创产品
+    </a>
+    <a href="https://meeting-bronze.github.io/information">
+        <i class="iconfont icon-ziliaoku"></i> <!-- 对话框图标 -->
+        资料推荐
+    </a>
+    
+</nav>
+
+    
+    <!-- 弹窗 -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="itemName"></h2>
+            <img id="itemImage" src="" alt="图片无法加载">
+            <p id="itemDynasty"></p>
+            <p id="itemDescription"></p>
+        </div>
+    </div>
+    
+    <script>
+        // 图片数据
+        const images = [
+        {
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E6%88%88%E5%B7%B1%E5%8F%8C%E5%85%94%E8%80%B3%E7%B0%8B.jpg",
+    "title": "戈己双兔耳簋",
+    "dynasty": "周",
+    "description": "簋体圆，深腹，腹两侧有双耳，耳上部装饰兔首，耳下有小珥。簋颈部前后各饰有一浮雕兽面，左右饰目雷纹，簋足饰兽面纹。簋内底铸有铭文“戈己”二字，表明此簋是“戈”族“己”日祭器。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E6%B0%B4%E9%BC%8E.jpg",
+    "title": "水鼎",
+    "dynasty": "周",
+    "description": "鼎圆腹，二直耳，三足形状界于柱足与马蹄足之间。腹上均匀地分部四道扉棱，颈部饰两组张口卷尾的对夔纹。腹周饰一圈竖直线纹，直线纹下再饰三角形的垂叶纹。三足饰兽面纹和弦纹。器内底铸铭“水”字，为器物所有者的名或家族族徽。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%99%8E%E6%88%9F%E9%95%88.jpg",
+    "title": "虎戟镈",
+    "dynasty": "西周",
+    "description": "镈呈椭圆形，平口，“舞”上有半环形钮。镈钮饰云纹，镈身两面饰兽面纹，正中都有窄长条花边扉棱，镈口上部饰圆涡纹与花瓣纹，镈两侧各饰二虎，四虎的形象非写实而是图案化。此镈是研究西周青铜器纹饰和古代造型艺术非常难得的资料。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%99%8E%E7%88%B6%E4%B9%99%E9%BC%8E.jpg",
+    "title": "虎父乙鼎",
+    "dynasty": "西周",
+    "description": "鼎口上立圜顶耳，折沿，方唇，腹壁与圜底弯曲相和，底部三角形范线十分清晰，三条柱足较长。口沿下饰一周由细雷纹构成的展体式羽脊兽面纹。内壁一侧近口沿处铸有铭文三字：“虎父乙”。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%A0%87%E4%B8%B4%E7%B0%8B.jpg",
+    "title": "堇临簋",
+    "dynasty": "西周早期",
+    "description": "器圆形，侈口，大腹，双耳，圈足。双耳上饰兽头，耳身饰鸟头，长珥上雕鸟尾及足，腹前后各饰一大兽面纹，口及圈足各有一带漩涡纹，间以变体夔龙纹，中间有一凸雕兽面纹。器内底铸铭文1行8字：“堇临作父乙宝尊彝”。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%9D%89%E7%BA%B9%E8%A7%AF.jpg",
+    "title": "蝉纹觯",
+    "dynasty": "西周早期",
+    "description": "觯撇口，束颈，扁圆腹，圈足。器身自上而下装饰多层纹饰：颈部饰蝉纹，颈下为一圈蜗身兽纹，腹部及以下分饰两层兽面纹。蝉纹作为青铜器上的装饰纹样多见于商末周初时期。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%9B%A2%E9%BE%99%E7%BA%B9%E7%B0%8B.jpg",
+    "title": "团龙纹簋",
+    "dynasty": "西周早期",
+    "description": "此簋侈口，圆腹，圈足。腹有二兽耳垂珥。腹饰浮雕团龙纹，龙张口，双齿外露，鼻上卷。龙纹两两对峙。圈足饰弓身卷尾蚕纹。通体以细云雷纹填地。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%A1%B6%E5%8D%A3.jpg",
+    "title": "顶卣",
+    "dynasty": "西周早期",
+    "description": "此卣为扁圆形体，盖顶隆起，折沿明显，圈形捉手。器身子母口，鼓腹，圈足有宽边。提梁两端之兽首似羊形，面饰蝉纹。盖与器身四面有较高的扉棱，盖面和器腹饰无地纹的分解式兽面纹，颈部饰相对回顾的卷尾夔龙纹，以浮雕兽首相隔。盖沿和圈足饰两两相对的四组以分尾夔纹组成的兽面纹。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E6%88%90%E5%91%A8%E9%93%83.jpg",
+    "title": "成周铃",
+    "dynasty": "西周早期",
+    "description": "成周铃平口，顶上有半环形钮，铃身一侧倾斜，形成不平衡状态。体内有舌，舌碰击铃内壁时可以发声。铃正面有阳文2行4字：“成周王铃”，标明其为成周（洛阳）王室用铃。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E4%BC%AF%E7%9B%82.jpg",
+    "title": "伯盂",
+    "dynasty": "西周早期",
+    "description": "伯盂圆腹，卷沿，有二附耳，圈足。颈部前后饰浮雕兽首，兽首两侧饰夔首鸟身的变形夔纹，也称夔鸟纹。腹部饰宽叶纹，圈足上饰对角夔纹。盂内底有铭文2行15字：“伯作宝尊盂，其万年孙子子永宝用享”，大意是说：伯做了这件宝贵的盂，希望后代子孙永远享用，并以此为宝。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E6%9C%89%E7%9B%98%E9%BC%8E.jpg",
+    "title": "有盘鼎",
+    "dynasty": "西周早期",
+    "description": "有盘鼎圆形浅腹，二直耳，三夔形扁足，足中部有隔似盘。颈部饰兽面纹带，兽面中间凸起一道扉棱，恰似兽面的鼻子。此种形制的鼎在以往的考古发掘品和传世藏品中较少见。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%AC%B4%E9%9C%9D%E5%BE%B7%E9%BC%8E.jpg",
+    "title": "嬴霝德鼎",
+    "dynasty": "西周早期",
+    "description": "嬴霝德鼎平沿外折，深圆腹，二直耳，三柱足较短，腹饰二道弦纹。腹内铸有铭文2行6字：“嬴霝德，作小鼎”，做鼎自铭“小鼎”者，较少见。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%8F%B2%E6%96%BF%E7%88%B6%E9%BC%8E.jpg",
+    "title": "史斿父鼎",
+    "dynasty": "西周早期",
+    "description": "史斿父鼎口微侈，有立耳，分裆，实足。颈部饰列旗兽面纹，兽面中部附饰浮雕牺首。内壁铸铭文3行9字：“史斿父作宝尊彝鼎。七五八”，记史游父做鼎。铭后所附数字是八卦符号，表明铸造此鼎时曾经进行过一次占筮。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%AF%93%E9%BC%8E.jpg",
+    "title": "寓鼎",
+    "dynasty": "西周早期",
+    "description": "寓鼎为深圆腹，三柱足，二直耳。口沿下饰兽面纹带，纹带的上列有一排旗状图案。内壁有铭文4行30字，铭文大意：在十二月丁丑这一天，寓献给王后佩饰，王后赐给寓美丝。为答谢王后的美意，特做此宝鼎，用以纪念死去的父亲壬。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%8D%A3%E7%B0%8B.jpg",
+    "title": "荣簋",
+    "dynasty": "西周早期",
+    "description": "荣簋簋内底铸有铭文5行30字：“唯正月甲申，荣格，王休，赐厥臣父，荣瓒王祼贝百朋。对扬天子休，用作宝尊彝。”铭文大意是“在正月甲申这一天，荣公到了这里（周王的住处）。周王称赞并赏赐他的臣父荣公。周王酌酒相敬，并赏赐贝币百朋。为颂扬周王对自己的恩宠及褒赏，荣公制作了这件铜器。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%B2%81%E4%BE%AF%E7%88%B5.jpg",
+    "title": "鲁侯爵",
+    "dynasty": "西周早期",
+    "description": "鲁侯爵爵体略长而优美，流尾上翘，爵壁较直，无柱，鋬较小，饰有兽头，圆底，刀形足外撇。腹上下饰二层云雷纹带，中间隔以凸起的弦纹。尾部口壁内铸有铭文2行10字，铭文大意：鲁侯做了这个爵，用来放置祭祀父亲的庙里的酒和聘礼、盟礼。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%8F%94%E5%8D%A3.jpg",
+    "title": "叔卣",
+    "dynasty": "西周早期",
+    "description": "叔卣为椭方体，方口四角发圆，大腹，圈足，有盖，盖顶作喇叭形捉手。器颈与盖沿均四面铸有贯耳，两两相对，贯耳是穿系的地方。盖面与器颈部均饰兽面纹带，圈足饰细弦纹两道。卣盖内与器底有对铭，均5行32字。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%BE%AE%E5%B8%88%E8%80%B3%E5%B0%8A.jpg",
+    "title": "微师耳尊",
+    "dynasty": "西周早期",
+    "description": "尊为圆筒形，侈口，鼓腹，圈足。颈下与圈足上部均饰弦纹两道，腹部上下两周纹带均饰以双线勾勒的变形夔纹，夔纹带上下用圈带纹镶边。尊内底有铭文7行52字。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%B8%88%E8%B6%9B%E9%AC%B2.jpg",
+    "title": "师趛鬲",
+    "dynasty": "西周中期",
+    "description": "师趛鬲是传世品，表面经打磨上腊，颜色黑中透亮，器极精致美观。本器侈口，折沿，束颈，附耳，分档袋形腹有扉，蹄形足。全器纹饰由三种纹样组成，腹部以回形纹为地，上以凸起的六只巨大的回首夔龙纹为主体纹饰；颈部饰双首夔龙回曲纹带；附耳内外两侧均饰以重环纹。器内壁铸铭文5行29字。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%B8%88%E6%97%82%E9%BC%8E.jpg",
+    "title": "师旂鼎",
+    "dynasty": "西周中期",
+    "description": "鼎圆浅腹，腹倾垂，二直耳，三柱足。颈饰一周长身分尾垂嘴的鸟纹。器内壁铸铭文8行79字，铭文记录了西周中期军法处罚事件，反映了当时的法律制度，是研究法律史的珍贵资料。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%87%A4%E9%B8%9F%E7%BA%B9%E9%95%9C.jpg",
+    "title": "凤鸟纹爵",
+    "dynasty": "西周中期",
+    "description": "西周凤鸟纹爵为西周中期的青铜爵，现收藏于北京故宫博物馆。该爵倾酒用的流甚宽大，与流相对的尾尖锐，口与流之间有伞形柱一对。器腹呈杯形，一侧有兽首鋬，器下有三刀形尖足。器身装饰鸟纹，整体形态优雅舒展，重心略偏上，各部位的不同纹饰丰富了器物的外观视觉效果。"
+},
+{
+    "src": NaN,
+    "title": "淊御史罍",
+    "dynasty": "西周中期",
+    "description": "此罍平沿，斜肩，肩上有兽首衔环双耳，腹斜收。颈饰窃曲纹，肩饰涡纹间变体夔龙纹，腹饰蕉叶对夔纹。罍口内有铭文5行19字，记淊地的御史自做此罍，祈望万寿无疆，子孙后代永宝用此罍。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E6%AF%B3%E7%B0%8B.jpg",
+    "title": "毳簋",
+    "dynasty": "西周中期",
+    "description": "此簋圆形，侈口，折沿，鼓腹，有二附耳，有盖，盖顶有圆形捉手，圈足下附三矮足。器颈与盖沿各饰一周窃曲纹带，腹与盖面均饰直道纹，圈足上饰粗弦纹一道。簋盖、器对铭，3行16字，铭文记毳为其婆母媿氏做盛饭食用的簋，祈望媿氏万年长寿，使用此簋。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E6%AC%A1%E5%8D%A3.jpg",
+    "title": "次卣",
+    "dynasty": "西周中期",
+    "description": "此卣圆鼓腹，圈足，有盖，盖顶有喇叭形握，盖两侧铸直立的“犄角”。器以半环衔接提梁，提梁两端雕饰兽头。器颈与盖前后均铸有浮雕兽首，兽首两侧饰纹带。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%BF%BD%E7%B0%8B.jpg",
+    "title": "追簋",
+    "dynasty": "西周中期",
+    "description": "追簋为盛食器，器体较大，隆盖，顶有圆形捉手，侈口，鼓腹，圈足，下附方座，腹部两侧以回顾龙为耳。盖缘、口沿下饰窃曲纹，腹部饰连体龙纹，方座饰卷体龙纹。盖器同铭，各铸7行60字。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%A4%AA%E5%B8%88%E8%99%98%E7%B0%8B.jpg",
+    "title": "太师虘簋",
+    "dynasty": "西周中期",
+    "description": "太师虘簋为盛食器，簋矮体，鼓腹，圈足，颈两侧有风格独特的兽头鋬。有盖，盖顶捉手作喇叭形。盖面与器腹均饰竖直纹，颈部及圈足上各饰粗弦纹一道。簋盖内和器底铸对铭7行70字。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%B1%86%E9%97%AD%E7%B0%8B.jpg",
+    "title": "豆闭簋",
+    "dynasty": "西周中期",
+    "description": "豆闭簋弇口，圆鼓腹，圈足，腹两侧有兽首衔环耳。器身自上而下满饰平行的瓦棱纹。簋内底铸铭文9行92字。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%85%8D%E5%B0%8A.jpg",
+    "title": "免尊",
+    "dynasty": "西周中期",
+    "description": "尊侈口，圆垂腹，圈足。颈部前后雕铸兽首，兽首两侧均饰垂冠回首的夔鸟纹。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E6%A0%BC%E4%BC%AF%E7%B0%8B.jpg",
+    "title": "格伯簋",
+    "dynasty": "西周中期",
+    "description": "格伯簋圆腹，圈足，下有方座。二兽头耳，耳下端似象鼻卷曲。器颈前后正中各铸一凸起的兽头，兽头两侧饰夔纹和圆涡纹。腹部和方座四壁中心饰竖直纹，圈足饰连续的四瓣花和圆涡纹带，方座四壁边缘饰圆涡纹和窃曲纹，方座顶部四角饰兽面纹。簋内底铸有铭文9行83字。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%90%8C%E7%B0%8B.jpg",
+    "title": "同簋",
+    "dynasty": "西周中期",
+    "description": "同簋圆形，侈口，鼓腹，圈足，双兽首耳。颈部前后对称雕铸兽头，兽头两侧是窃曲纹带。腹部有一道凸弦纹。盖器同铭，9行91字。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%88%96%E4%BA%BA%E9%AC%B2.jpg",
+    "title": "刖人鬲",
+    "dynasty": "西周晚期",
+    "description": "刖人鬲是一种特殊的青铜器，它不仅是一件实用器，也是见证我国古代刑罚的重要物证。此鬲装饰有刖人造型，形似现在的火锅，展现出西周时期独特的饮食方式。刖人守门鼎的现世源于宝鸡市扶风县农民一次偶然的耕作，1976年在陕西扶风县法门公社的田间发现了一个大型青铜器窖藏，即庄白一号窖藏。这件方鼎通高17.7厘米，口横11.9厘米，口纵9.2厘米，腹深6.3厘米，重1.6公斤。双附耳，器口为钝角长方形，四角各有一个立体卷尾龙。全器由上下两部分组成，口沿下装饰云雷纹衬底的窃曲纹。下层是一炉体，左右两侧开小方窗。正面为可以开合的两扇小门，一门上饰一兽钮，另一门侧键部是一刖刑奴隶作守门状。炉底镂有5个小方孔，可以从左、右、背后、下4个方向出烟。背面是镂空窃曲纹，可以通风助燃。炉内可烧木炭，使鼎内的食物保持温度。四个鼎足为四兽足，下部四角饰立体隼鸟。此鼎造型奇妙，装饰和实用相结合，颇具匠心。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%8F%B2%E5%AE%9C%E7%88%B6%E9%BC%8E.jpg",
+    "title": "史宜父鼎",
+    "dynasty": "西周晚期",
+    "description": "史宜父鼎是西周晚期青铜礼器中的食器，鼎双立耳微向外撇，腹略鼓收敛成圜底，兽蹄足较粗壮。口下饰几何纹，造型和纹饰具备西周晚期青铜器的特点。器内有3行16字铭文：“史宜父作尊鼎，其万年，子子孙孙永保用。”鼎是青铜礼器中的食器，但多数不是直接的烹煮器。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%9E%82%E9%B3%9E%E7%BA%B9%E5%8D%AE.jpg",
+    "title": "垂鳞纹卮",
+    "dynasty": "西周晚期",
+    "description": "卮侈口，短颈，鼓腹，单柄，平底，器身矮宽敦实。颈下方饰一周云雷纹，器腹有三层相互叠压的鱼鳞纹。器柄做成三股绳的形状，每股间留有空隙，精巧写实，构思十分新颖。卮是古时酒器，《史记·项羽本纪》载，鸿门宴上项羽对樊哙曾“赐之卮酒”。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%8D%AB%E5%A7%8B%E8%B1%86.jpg",
+    "title": "卫始豆",
+    "dynasty": "西周晚期",
+    "description": "卫始豆敛口圜底，浅盘高足，隆盖圈握。盖顶饰瓦纹，盖沿与器腹均饰重环纹，足饰粗弦纹一周。盖与器同铭，均2行6字：“卫始作『0231』霝簋。”记卫始自做灵簋（此豆自铭为簋）"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%A4%A7%E9%BC%8E.jpg",
+    "title": "大鼎",
+    "dynasty": "西周晚期",
+    "description": "大鼎平沿外折，深圆腹，有二立耳，三蹄足。器口下饰二道弦纹。鼎内壁有铭文8行82字，大意是说：在十五年三月，月相为“既霸”的丁亥日，王在『0225』侲宫，大与其僚属担负保卫任务。王举行大饗之礼，王命近臣膳夫『0227』召大，命大与其僚属进入宫内担负保卫任务。王又召武官走马『0229』，命他取出32匹赤色黑尾的雄马赐给大。大拜，叩头。为答谢和宣扬天子伟大的美意，做了这件纪念其光荣的父亲的鼎。大的子孙后代万年永远宝用这个鼎。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%94%A1%E5%85%AC%E5%AD%90%E5%A3%B6.jpg",
+    "title": "蔡公子壶",
+    "dynasty": "西周晚期",
+    "description": "蔡公子壶直口，长颈，有兽首形大套环双耳，鼓腹，圈足有宽边。壶盖已失。壶口下饰三角形兽面纹，器颈及圈足饰重环纹，器腹两面以突起的带纹构成田字形网格，每一格内均饰蟠龙纹。壶内底铸铭文7行29字，记在正月第一个吉日庚午这一天，蔡国公子某做此祭祀用壶，祈长寿无疆，子孙万年永宝此壶用来祭享。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E4%BB%B2%E6%9F%9F%E7%88%B6%E7%B0%8B.jpg",
+    "title": "仲柟父簋",
+    "dynasty": "西周晚期",
+    "description": "仲柟父簋圆鼓腹，二兽耳，弇口，圈足下有三兽首足。器有盖，盖顶为圆形捉手。盖面与器腹均饰平行瓦棱纹，盖沿及器颈各饰窃曲纹带。簋盖和器内均有铭文4行39字，大意为记在六月第一个吉日，师汤父的下属官吏仲柟父自做宝簋，用来祭享死去的伟大父祖，以求长寿。仲柟父的后代子孙万年永宝用此簋。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%8A%AE%E5%A4%AA%E5%AD%90%E7%99%BD%E7%B0%A0.jpg",
+    "title": "芮太子白簠",
+    "dynasty": "西周晚期",
+    "description": "芮太子白簠腹壁斜收，腹左右两侧有环耳，耳上端雕饰兽头，方圈足前后正中有缺。口沿饰重环纹，腹饰兽带纹，足饰窃曲纹。簠内底有铭文3行14字，铭文记芮太子白自做簠，祈望万年子孙永宝用。同铭簠共两件，皆藏于北京故宫博物院。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%99%A2%E5%8F%94%E6%97%85%E9%92%9F.jpg",
+    "title": "虢叔旅钟",
+    "dynasty": "西周晚期",
+    "description": "虢叔旅钟体呈合瓦形，桥形口，长乳，甬饰环带纹。钟钲部有铭文4行，左鼓有铭文6行，共计91字。大意是虢叔旅说：“（我）伟大显赫光荣的去世的父亲惠叔，秉持美好光明的德行，服务于他的主人，得到好处不尽。旅以亡父的威仪为榜样，服务于天子。于是天子赐予旅更多的好处。”旅为报答和宣扬天子给予的众多好处，因此做了死去的父亲惠叔的大套编钟。光荣的父亲庄重的在天上，庇佑着下界的后代们。当编钟叮叮咚咚敲响的时候，就会给旅从天而降许多福气。旅的后代子孙，万年永远宝藏这些钟，用来祭享祖先。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E6%9D%9C%E4%BC%AF%E7%9B%A8.jpg",
+    "title": "杜伯盨",
+    "dynasty": "西周晚期",
+    "description": "杜伯盨为长圆形，有二兽首耳，敛口，有盖，盖上有扁足。盖打开后可以却置。器颈与盖沿各饰窃曲纹带，盖面与器腹均饰瓦棱纹。盖和器同铭，4行30字，大意是杜伯自做此宝盨，用来祭奠死去的父祖与朋友的光辉神灵，用来祈求长寿，万年永宝用。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E6%9D%9C%E4%BC%AF%E9%AC%B2.jpg",
+    "title": "杜伯鬲",
+    "dynasty": "西周晚期",
+    "description": "杜伯鬲是一件极具历史文化价值的西周晚期青铜器，现藏于北京故宫博物院123. 它高 13.2cm，宽 17.5cm，重 1.58kg，宽平缘外折，束颈，圆肩，底部近平，足呈兽蹄形，器身三面出戟，肩部饰重环纹123. 鬲口沿上有铭文 2 行 17 字，为 “杜伯作叔祁尊鬲，其万年子子孙孙永宝用”，记载了杜伯为叔祁做此祭祀用鬲，并祈望子孙后代万年永宝用的美好愿望123. 杜伯鬲不仅在艺术风格上展现了西周晚期青铜器的典型特征，其铭文也为研究西周时期的历史、文化、社会制度以及杜国的相关情况等提供了珍贵的实物资料，具有重要的考古学和历史学意义3."
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%8F%94%E4%B8%8A%E5%8C%9C.jpg",
+    "title": "叔上匜",
+    "dynasty": "西周晚期",
+    "description": "叔上匜宽流，曲口，鋬作夔龙形，口衔匜沿作探水状。器腹饰兽带纹。匜的前两足上部饰兽首，后两足上部作兽尾形。匜内底有铭文5行33字，记在十二月第一个吉日乙巳这天，郑国的大内史叔上为其女叔妘做了这件陪嫁用的匜。祈望她万寿无疆，子孙后代永宝用之。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%B8%88%E5%85%8B%E7%9B%A8.jpg",
+    "title": "师克盨",
+    "dynasty": "西周晚期",
+    "description": "师克盨长方形，敛口，圆角，双兽耳，圈足。有盖，盖上有4个呈矩形的短足。盖沿与器颈各饰窃曲纹一道，盖上与器腹饰瓦棱纹，盖之矩足上饰夔纹。盨盖与器有对铭，14行148字。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%B0%8F%E5%85%8B%E9%BC%8E.jpg",
+    "title": "小克鼎",
+    "dynasty": "西周晚期",
+    "description": "小克鼎是膳夫克为宣扬周天子美意和祈求自己子孙康顺福佑永远保持荣誉而铸。同出共7件，器形、纹饰、铭文相同，但大小有差。器内壁铸铭文8行72字，大意是：在周王（孝王）二十三年的九月，周王在宗周（即镐京，位于今西安），周王命令膳夫克到东部新都成周洛阳发布命令，整肃王的部队成周八师。就在这一年克作了这批纪念其伟大祖父季并置于其宗庙中的宝贵彝器。克每日用它来祭享祖先，同时也就每日在宣扬他的主人周王的厚重美意。用来祈求康顺、福佑、老寿、长命、善终。愿克万年无疆，克的子孙后代永远宝用这批彝器。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%A2%82%E9%BC%8E.jpg",
+    "title": "颂鼎",
+    "dynasty": "西周晚期",
+    "description": "颂鼎为圆腹，圜底，二立耳，腹饰二道弦纹。鼎内壁有铭文14行152字，铭文大意：在三年五月下半月的甲戌日，王在周地康王庙里的昭王庙。天刚亮，王到了昭庙大厅里，坐定位置。宰引作为佑者带领颂进入昭庙大门，站立于庭院中。尹氏将拟就的任命书交到王的手中，王命史官虢生宣读任命书。王的任命书说：“颂，命你管理有20家胥隶的仓库，监督管理新建的宫内用品仓库。赏赐你黑色带绣边的官服上衣，配有红色饰带的大红色围裙，车马用具的銮铃、旗子和马笼头。执行任务。”颂拜，叩头，接受册命书，佩带以出，又返回庙中，贡纳觐见用璋。颂为答谢和宣扬天子伟大厚重的美意，因而做了祭奠其死去的伟大父亲龚叔、母亲龚姒的宝鼎。用来追念孝意，祈求得到健康、厚大的祐助、仕宦之途通顺、长命。颂万年老寿，长作天子之臣而得善终。子孙后代宝用此鼎。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%B8%88%E9%85%89%E7%B0%8B%20%282%29.jpg",
+    "title": "师酉簋",
+    "dynasty": "西周晚期",
+    "description": "器敛口，鼓腹，圜底，圈足下接铸三个兽面状扁足。盖面隆起，上有圈状捉手。口沿两侧有一对兽首半环耳，耳上之兽的兽角呈螺旋状，垂珥上有兽身状纹饰。盖沿、器口沿分别饰以大小相间的重环纹，圈足饰单体重环纹一周，盖面及腹部饰瓦棱纹。盖内与器内底对铭107字，分11列，每列9至11字。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%B0%8F%E7%B0%8B.jpg",
+    "title": "谏簋",
+    "dynasty": "西周晚期",
+    "description": "谏簋圆形，敛口，鼓腹，圈足下有三小足，腹部两侧兽耳下垂小珥。隆盖，顶有圆形捉手。盖顶和器腹饰瓦纹，颈部与盖沿饰窃曲纹，圈足饰三角云纹。盖器对铭，器铭文9行102字，盖10行101字。铭文大意为在五年三月第一个吉日庚寅那一天，王在周地的师录宫。天刚亮，王到大厅，坐定位子。司马共带领做器者谏进入庙门，站立于庭院中间。王召呼史官内史先册命谏，说：“我的先辈周王既然已经任命你兼管王的宴乐之事，你不能思虑有所不周，不能不善待其事。现在我继续任命你管理原来的事情。赏赐给你一套马笼头。”谏拜，叩头。为答谢和宣扬天子伟大显赫的美意，谏因此做了祭奠其死去的父亲惠伯的簋。谏的后代子孙万年永宝用这件簋。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E6%89%AC%E7%B0%8B.jpg",
+    "title": "扬簋",
+    "dynasty": "西周晚期",
+    "description": "扬簋弇口，圆鼓腹，圈足下有三屈折状短足，二附耳各衔套环，器盖已失。器腹饰瓦棱纹，颈上与圈足各有一道窃曲纹，圈足上与短足对应处各铸一浮雕兽头。簋内底铸有铭文10行107字，铭文大意为在周王九月上半月的庚寅日，王在周地的康王庙。天刚亮，王到了大厅，坐定位子。司徒单伯作佑者带领扬进入庙门。王召呼史官内史先任命扬。史官代宣王命曰：“扬，任命你为司工，主要管理农田官吏，兼管营造王的临时驻跸地的官吏、牛马刍草官吏及治安狱讼官吏、司工下属的官吏。赏赐你大红色的围裙、銮铃和旗帜。任命你有权利主持讯讼，其级别是可以取两造‘入金’五锊。”扬以手相拜，叩头。为报答和宣扬天子伟大的美意，因而做了光荣的父亲宪的宝簋。后代子孙万代永远宝用这件簋。"
+}
+        ];
+    
+        const itemsPerPage = 8;
+        let currentPage = 1;
+    
+        // 获取弹窗相关元素
+        const modal = document.getElementById("myModal");
+        const itemName = document.getElementById("itemName");
+        const itemImage = document.getElementById("itemImage");
+        const itemDynasty = document.getElementById("itemDynasty");        
+        const itemDescription = document.getElementById("itemDescription");
+    
+        // 获取关闭按钮元素
+        const span = document.getElementsByClassName("close")[0];
+    
+        // 点击关闭按钮关闭弹窗
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+    
+        // 点击弹窗外区域关闭弹窗
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    
+        // 显示图片的函数
+        function displayImages(page) {
+            const start = (page - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const content = document.getElementById('content');
+            content.innerHTML = '';
+    
+            images.slice(start, end).forEach(item => {
+                const a = document.createElement('a');
+                a.onclick = function(e) {
+                    e.preventDefault();
+                    itemName.textContent = item.title;
+                    itemImage.src = item.src;
+                    itemDynasty.textContent = `朝代：${item.dynasty}`;
+                    itemDescription.textContent = item.description;
+                    modal.style.display = "block";
+                };
+    
+                const img = document.createElement('img');
+                img.src = item.src;
+                img.className = "item-image";
+                img.alt = "图片无法加载";
+    
+                const title = document.createElement('div');
+                title.className = "item-introduction";
+                title.textContent = item.title;
+    
+                a.appendChild(img);
+                a.appendChild(title);
+                content.appendChild(a);
+            });
+    
+            updatePagination();
+        }
+    
+        // 更新分页信息
+        function updatePagination() {
+            const totalPages = Math.ceil(images.length / itemsPerPage);
+            document.getElementById('pageInfo').textContent = `${currentPage} / ${totalPages}`;
+            document.getElementById('prevBtn').disabled = currentPage === 1;
+            document.getElementById('nextBtn').disabled = currentPage === totalPages;
+        }
+    
+        // 切换页面
+        function changePage(offset) {
+            currentPage += offset;
+            displayImages(currentPage);
+        }
+    
+        // 初始化页面
+        displayImages(currentPage);
+    </script>
+</body>
+</html>

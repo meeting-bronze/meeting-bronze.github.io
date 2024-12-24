@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/c/font_4731064_jvjmjota6g.css">
+    <title>汉朝青铜器</title>
+    <style>
+        /* 重置样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            max-width: 375px;
+            margin: 0 auto;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            border: #888 solid 1px;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content {
+            flex: 1;
+            background-color: #faf8f8;
+            text-align: center; 
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        .content a {
+            width: 48%;
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 3%;
+            color: black;
+            text-decoration: none;
+            transition: transform 0.3s;
+            cursor: pointer;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .content a:hover {
+            transform: scale(1.05);
+        }
+
+        .item-image {
+            width: 100%;
+            object-fit: cover;
+            aspect-ratio: 1;
+        }
+
+        .item-introduction {
+            width: 100%;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 20px;
+        }
+
+        /* 底部导航栏样式 */
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+            box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-nav a {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            color: #333;
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .footer-nav a:hover {
+            color: #1AAD19;
+        }
+
+        .footer-nav a i {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .footer-nav a.active {
+            color: #ffbb00;
+        }
+
+        /* 底部分页样式 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .pagination span {
+            margin: 0 10px;
+        }
+
+        .pagination button {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .pagination button:disabled {
+            color: #ddd;
+            cursor: not-allowed;
+        }
+
+        /* 弹窗样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 375px;
+            border-radius: 10px;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .modal-content p {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <img src="https://yty93669.oss-cn-beijing.aliyuncs.com/青铜奇缘/bronze/单页标题" style="width:100%;height:auto">
+    <div style="width:100%;text-align: center;font-size: 20px;margin:10px 0">-汉朝青铜器-</div>
+
+    <div class="content" id="content">
+        <!-- 图片内容将通过JavaScript动态添加 -->
+    </div>
+    
+    <!-- 分页按钮容器 -->
+    <div class="pagination" id="pagination">
+        <button id="prevBtn" onclick="changePage(-1)" disabled>&lt;</button>
+        <span id="pageInfo">1 / 1</span>
+        <button id="nextBtn" onclick="changePage(1)">&gt;</button>
+    </div>
+    
+    <div style="height: 80px;"></div>
+    
+    <!-- 底部导航栏 -->
+   <nav class="footer-nav">
+    <a href="https://meeting-bronze.github.io/index" >
+        <i class="iconfont icon-shouye"></i> <!-- 房子图标 -->
+        首页
+    </a>
+    <a href="https://meeting-bronze.github.io/bronze" class="active">
+        <i class="iconfont icon-pot"></i> <!-- 人物图标 -->
+        青铜器
+    </a>
+    <a href="https://meeting-bronze.github.io/products">
+        <i class="iconfont icon-gudai"></i> <!-- 加号图标 -->
+        文创产品
+    </a>
+    <a href="https://meeting-bronze.github.io/information">
+        <i class="iconfont icon-ziliaoku"></i> <!-- 对话框图标 -->
+        资料推荐
+    </a>
+    
+</nav>
+
+    
+    <!-- 弹窗 -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="itemName"></h2>
+            <img id="itemImage" src="" alt="图片无法加载">
+            <p id="itemDynasty"></p>
+            <p id="itemDescription"></p>
+        </div>
+    </div>
+    
+    <script>
+        // 图片数据
+        const images = [
+        {
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E6%B1%89%E4%BD%9C%E4%BD%B3%E9%95%9C.jpg",
+    "title": "汉作佳镜",
+    "dynasty": "汉",
+    "description": "此镜属于典型的博局镜式，圆钮，钮外为四瓣柿蒂纹，单线方格与双线方格间排列十二支铭文，并间以乳钉。方框外有博局纹，间以青龙、白虎、朱雀、玄武四神及乳钉，外圈为铭文38字：“作佳镜哉真大好，上有仙人不知老，渴饮泉饥食枣，浮游天下敖四海，左龙右虎辟陈道，寿如金石。”铭文外为横纹及锯齿纹装饰各一周，最外为简化云纹。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%85%94%E7%8C%B4%E9%93%9C%E5%B8%A6%E9%92%A9.jpg",
+    "title": "兔猴铜带钩",
+    "dynasty": "汉",
+    "description": "带钩通体鎏金，动物装饰均采用高浮雕手法。带钩前端为鸟首钩，后端装饰猴纹，猴一腿立，另一腿向后弯曲，双爪捧握食物。带钩正中还饰有一卧兔，兔耳较长，形态生动。带钩是古人腰带上的挂钩，铜制带钩最早在游牧民族地区流行，春秋战国时期开始在中原地区出现，一直沿用到汉代。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%99%8E%E9%A3%9F%E7%BE%8A%E9%93%9C%E9%A5%B0%E7%89%8C.jpg",
+    "title": "虎食羊铜饰牌",
+    "dynasty": "汉",
+    "description": "虎食羊铜饰牌塑造的是一只刚刚捕获到猎物的猛虎口衔羊颈的状态，栩栩如生地再现了草原上猛虎捕食到猎物后的瞬间形态，生动传神。铜饰牌为单面镂雕，表现猛虎咬噬羊颈，弱肉强食的生动场面，寓意佩带者驰骋草原的勇者气概。饰牌是鄂尔多斯青铜器中最能反映中国北方早期畜牧民族文化与艺术特征的物品。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%A5%94%E9%A9%AC%E7%BA%B9%E5%B0%8F%E5%A3%B6.jpg",
+    "title": "奔马纹小壶",
+    "dynasty": "汉",
+    "description": "小壶圆口，肩部有规矩的双系，扁圆形腹，足呈梯形，形如覆斗。小壶整体线条流畅，小巧精致。纹饰丰富细腻：颈部有锯齿纹，下方刻画一匹生动的花斑奔马，四蹄腾跃，鬃尾飘逸，形神毕肖，表现出汉代器物雄浑大气的时代风格。腹部主体纹饰的排列方式作鱼鳞状上下重叠交错，细部花纹带有明显的异域风格，是一件研究汉代北方各民族文化交流的具有特色的重要文物。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E4%B8%B4%E8%A2%81%E4%BE%AF%E9%93%9C%E8%99%8E%E7%AC%A6.jpg",
+    "title": "临袁侯铜虎符",
+    "dynasty": "西汉",
+    "description": "符作卧虎形，昂首卷尾。此为符的左半，内侧有方形凹槽。虎背上有错银隶书9字：“与临袁侯为虎符，第二。”虎符是调动军队的凭证，其左授予统军的临袁侯，其右在皇帝手中，需要调动军队时即派使臣持虎符之右半前往临袁侯驻地，待两半虎符对合无误，方可发兵。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%93%9C%E7%BE%8A%E7%81%AF.jpg",
+    "title": "铜羊灯",
+    "dynasty": "西汉",
+    "description": "铜羊灯雕作立角羊形，身体浑圆，四肢直立，昂首凝目，憨态可掬。羊背设计成可活动的灯盘，羊体中空用以储存油脂。中国古代“羊”与“祥”通用，以羊形作灯象征吉祥。汉代的灯主要以脂膏为燃料，一般是动物或植物的油脂。使用时将灯炷缚成束浸在油脂里点燃照明，古人称其为“膏烛”。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%BB%BA%E6%AD%A6%E4%BA%8C%E5%8D%81%E4%B8%80%E5%B9%B4%E6%96%9B.jpg",
+    "title": "建武二十一年斛",
+    "dynasty": "东汉",
+    "description": "器分上斛下盘两部分，通体鎏金。斛有盖，盖中央饰四瓣叶纹，外围饰两周宽带纹，其内圈宽带纹上原饰有三只鸟，现已残失。斛身饰四周宽带纹，两侧有对称铺首衔环。斛和承盘下各具三熊足，上嵌杂色宝石，现多数已失。承盘口沿下铸铭文1行62字，反映了蜀郡工官为皇帝制造铜器分主造和制造两级，也反映了当时铜器制作分工很细以及“物勒工名”的制度。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E4%B8%89%E6%AE%B5%E5%8C%BA%E6%AE%B5%E5%BC%8F%E7%A5%9E%E5%85%BD%E9%95%9C.jpg",
+    "title": "三段区段式神兽镜",
+    "dynasty": "东汉",
+    "description": "镜圆形，圆形钮和钮座，钮上下之镜面有二平行线将内区分为三段。上段中间为一龟负华盖，龟右侧有一高大人物，其左右各饰一侍者，右侍后有一蟾蜍。龟左侧依次排列4人，最后一人身后立一鹤。中段左右各饰一舞狮。下段中间为盘丝形图案，左右各2人，分别盘坐、踞坐。中区为一周半圆形流云纹与方枚相间，地饰细点纹，每一方枚内各有铭文两字，可连读：“吾作明镜，幽炼川冈。巧工所居，尾克童上。有四守名，流美宜王。”外区饰菱形涡纹。此镜铸造精湛，人物、动物五官均极清晰，花纹细密繁复，十分难得。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%8D%9A%E5%BC%88%E4%B9%90%E8%88%9E%E7%BA%B9%E9%95%9C.jpg",
+    "title": "博弈乐舞纹镜",
+    "dynasty": "东汉",
+    "description": "镜圆形，圆钮，水波纹方形钮座，外围双线方格。方格外有四枚乳丁与方格四角相对，并将画面分为四区。一区饰二人对坐博弈，二人均跪左膝而身体前倾，神情十分专注。一区饰一人跪抱长琴，与其相对的一人屈腿展臂而舞。一区饰驯兽图，左侧一人为驯兽师，中间一虎形巨兽人立而舞，右侧一小猴席地而坐。一区饰一人居中端坐，左右两人各伸臂作奉献状。各区人物、动物的神态遥相呼应，神完气足。地纹为不规则的云纹，镜缘由里及外饰三角纹和几何纹各一周。此镜图案采用整体高浮雕，人物造型生动活泼，构图丰满。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%8D%9A%E5%B1%80%E7%BA%B9%E4%BA%BA%E7%89%A9%E7%94%BB%E5%83%8F%E9%95%9C.jpg",
+    "title": "博局纹人物画像镜",
+    "dynasty": "东汉",
+    "description": "镜圆形，半圆钮，钮座为四片向外伸展的花瓣，座外圈为弦纹和平滑的宽带方栏，两者间连有短线纹。方栏上饰“T”形纹饰，其四角对应镜内缘饰“V”形纹，而在与“T”形纹对应的镜内缘上饰“L”形纹。这些纹样因像工具中之规矩，故旧习称为“规矩纹”，而欧美学者称之为“TVL纹”。实际上此种镜纹是从汉代六博棋博具上移植而来，应称“博局纹”。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%8C%97%E6%B5%81%E5%9E%8B%E5%85%AD%E8%9B%99%E9%93%9C%E9%BC%93.jpg",
+    "title": "北流型六蛙铜鼓",
+    "dynasty": "东汉",
+    "description": "此鼓体形厚重硕大，鼓面伸出鼓颈外，面沿下折成“垂檐”，属北流型铜鼓。鼓面3弦分晕，18晕，鼓面边缘塑6蛙，其中一对累蹲蛙对称排列。鼓身胸部6晕，腰部9晕，足部7晕，耳边饰乳钉，中饰辫纹。根据铜鼓上的四出钱纹即可推断这种类型铜鼓的铸造和使用年代上限只能在东汉灵帝中平二年（186年）以后。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%BB%BA%E5%88%9D%E5%85%83%E5%B9%B4%E6%9C%B1%E6%8F%90%E9%80%A0%E6%B4%97.jpg",
+    "title": "建初元年朱提造洗",
+    "dynasty": "东汉",
+    "description": "此洗为盆形，宽沿微上翘，双铺首耳，惜已失环。洗身外侧饰凸起的宽带纹一道。洗内底两侧饰鱼纹，中间铸有“建初元年朱提造”7字铭文。"
+},
+
+        ];
+    
+        const itemsPerPage = 8;
+        let currentPage = 1;
+    
+        // 获取弹窗相关元素
+        const modal = document.getElementById("myModal");
+        const itemName = document.getElementById("itemName");
+        const itemImage = document.getElementById("itemImage");
+        const itemDynasty = document.getElementById("itemDynasty");        
+        const itemDescription = document.getElementById("itemDescription");
+    
+        // 获取关闭按钮元素
+        const span = document.getElementsByClassName("close")[0];
+    
+        // 点击关闭按钮关闭弹窗
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+    
+        // 点击弹窗外区域关闭弹窗
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    
+        // 显示图片的函数
+        function displayImages(page) {
+            const start = (page - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const content = document.getElementById('content');
+            content.innerHTML = '';
+    
+            images.slice(start, end).forEach(item => {
+                const a = document.createElement('a');
+                a.onclick = function(e) {
+                    e.preventDefault();
+                    itemName.textContent = item.title;
+                    itemImage.src = item.src;
+                    itemDynasty.textContent = `朝代：${item.dynasty}`;
+                    itemDescription.textContent = item.description;
+                    modal.style.display = "block";
+                };
+    
+                const img = document.createElement('img');
+                img.src = item.src;
+                img.className = "item-image";
+                img.alt = "图片无法加载";
+    
+                const title = document.createElement('div');
+                title.className = "item-introduction";
+                title.textContent = item.title;
+    
+                a.appendChild(img);
+                a.appendChild(title);
+                content.appendChild(a);
+            });
+    
+            updatePagination();
+        }
+    
+        // 更新分页信息
+        function updatePagination() {
+            const totalPages = Math.ceil(images.length / itemsPerPage);
+            document.getElementById('pageInfo').textContent = `${currentPage} / ${totalPages}`;
+            document.getElementById('prevBtn').disabled = currentPage === 1;
+            document.getElementById('nextBtn').disabled = currentPage === totalPages;
+        }
+    
+        // 切换页面
+        function changePage(offset) {
+            currentPage += offset;
+            displayImages(currentPage);
+        }
+    
+        // 初始化页面
+        displayImages(currentPage);
+    </script>
+</body>
+</html>

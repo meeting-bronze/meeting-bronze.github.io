@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/c/font_4731064_jvjmjota6g.css">
+    <title>春秋时期青铜器</title>
+    <style>
+        /* 重置样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            max-width: 375px;
+            margin: 0 auto;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            border: #888 solid 1px;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content {
+            flex: 1;
+            background-color: #faf8f8;
+            text-align: center; 
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        .content a {
+            width: 48%;
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 3%;
+            color: black;
+            text-decoration: none;
+            transition: transform 0.3s;
+            cursor: pointer;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .content a:hover {
+            transform: scale(1.05);
+        }
+
+        .item-image {
+            width: 100%;
+            object-fit: cover;
+            aspect-ratio: 1;
+        }
+
+        .item-introduction {
+            width: 100%;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 20px;
+        }
+
+        /* 底部导航栏样式 */
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+            box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-nav a {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            color: #333;
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .footer-nav a:hover {
+            color: #1AAD19;
+        }
+
+        .footer-nav a i {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .footer-nav a.active {
+            color: #ffbb00;
+        }
+
+        /* 底部分页样式 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .pagination span {
+            margin: 0 10px;
+        }
+
+        .pagination button {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .pagination button:disabled {
+            color: #ddd;
+            cursor: not-allowed;
+        }
+
+        /* 弹窗样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 375px;
+            border-radius: 10px;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .modal-content p {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <img src="https://yty93669.oss-cn-beijing.aliyuncs.com/青铜奇缘/bronze/单页标题" style="width:100%;height:auto">
+    <div style="width:100%;text-align: center;font-size: 20px;margin:10px 0">-春秋时期青铜器-</div>
+
+    <div class="content" id="content">
+        <!-- 图片内容将通过JavaScript动态添加 -->
+    </div>
+    
+    <!-- 分页按钮容器 -->
+    <div class="pagination" id="pagination">
+        <button id="prevBtn" onclick="changePage(-1)" disabled>&lt;</button>
+        <span id="pageInfo">1 / 1</span>
+        <button id="nextBtn" onclick="changePage(1)">&gt;</button>
+    </div>
+    
+    <div style="height: 80px;"></div>
+    
+    <!-- 底部导航栏 -->
+   <nav class="footer-nav">
+    <a href="https://meeting-bronze.github.io/index" >
+        <i class="iconfont icon-shouye"></i> <!-- 房子图标 -->
+        首页
+    </a>
+    <a href="https://meeting-bronze.github.io/bronze" class="active">
+        <i class="iconfont icon-pot"></i> <!-- 人物图标 -->
+        青铜器
+    </a>
+    <a href="https://meeting-bronze.github.io/products">
+        <i class="iconfont icon-gudai"></i> <!-- 加号图标 -->
+        文创产品
+    </a>
+    <a href="https://meeting-bronze.github.io/information">
+        <i class="iconfont icon-ziliaoku"></i> <!-- 对话框图标 -->
+        资料推荐
+    </a>
+    
+</nav>
+
+    
+    <!-- 弹窗 -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="itemName"></h2>
+            <img id="itemImage" src="" alt="图片无法加载">
+            <p id="itemDynasty"></p>
+            <p id="itemDescription"></p>
+        </div>
+    </div>
+    
+    <script>
+        // 图片数据
+        const images = [
+        {
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%99%88%E4%BE%AF%E9%BC%8E.jpg",
+    "title": "陈侯鼎",
+    "dynasty": "春秋前期",
+    "description": "陈侯鼎敞口，翻唇，口沿外附双耳，盂腹，三蹄足，腹上部环饰窃曲纹带。器内壁铸铭文4行21字，铭文大意为某年“正月初吉丁亥日”，铸器者为陈侯，物主为“□妫四母”，“其永寿用之”为祈语。器物主人妫姓，女姓，名四母，出自陈侯王室，妫字前无法辨认的字可能是四母的排行字。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E7%95%AA%E5%90%9B%E9%AC%B2%20%282%29.jpg",
+    "title": "番君鬲",
+    "dynasty": "春秋前期",
+    "description": "番君鬲口沿宽且外折，束颈，突肩，有凸棱，裆部趋平，足呈兽蹄形。肩饰变形窃曲纹。口沿有铭文17字，铭文意为：番君“0031”伯自作宝鼎，祈望万年无疆，子孙永用。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%99%88%E5%AD%90%E5%8C%9C.jpg",
+    "title": "陈子匜",
+    "dynasty": "春秋前期",
+    "description": "陈子匜口缘曲，流槽不太长，腹较浅，龙形鋬，下具四只扁兽足。以蟠螭纹为主体纹饰。器内有铭文5行30字，铭文大意为在正月第一个吉日丁亥这一天，陈子之子为他的女儿“0030”孟妫“0029”女做陪嫁用的匜，并祈求长寿，永远保用此器。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E6%A2%81%E4%BC%AF%E6%88%88.jpg",
+    "title": "梁伯戈",
+    "dynasty": "春秋前期",
+    "description": "戈为魏国的兵器。援的前锋呈圭角状，上刃在援末扬起，与长栏的上端形成弧线，下刃与胡自然相接，内为长方形，有一长穿，栏上两面各饰一兽头，栏内侧有三长穿。铭文记述梁伯做的是近卫部队宫行使用的戈，用来对付攻方敌人。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%9B%9B%E8%9B%87%E9%A5%B0%E7%94%97.jpg",
+    "title": "四蛇饰甗",
+    "dynasty": "春秋前期",
+    "description": "甗分体式。甑呈长方斗形，直口附耳，口内无隔，腹高深，上部外侈，下部收敛，平底上有箅孔，甑下有榫圈，是为子口。鬲直口附耳，口内有用来插甑之榫圈的凹形母口，肩四角各饰以盘蛇，蛇上颈昂起，双眼凸于头顶处，鬲鼓腹，饰四球，分裆线连于腰际，足为蹄形。甑腹饰有三层勾连雷纹，耳饰变体重环纹，鬲腹饰蛇纹，四条盘蛇身上饰鳞纹。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%8E%B2%E9%B9%A4%E6%96%B9%E5%A3%B6.jpg",
+    "title": "莲鹤方壶",
+    "dynasty": "春秋后期",
+    "description": "壶身为椭方形，颈部两侧装饰了两条回首观望的龙形怪兽构成双耳，腹部四周四条翼龙仿佛正在缓缓向上爬行，底部两只张口吐舌、侧首回望的卷尾兽，似乎正在倾其全力承托器身。最精彩的还是上层盖顶怒放的双层莲瓣，中央伫立一只引颈欲鸣、展翅欲飞的仙鹤，被郭沫若先生誉为“时代精神之象征”。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%83%BD%E5%8E%9F%E9%95%88.jpg",
+    "title": "能原镈",
+    "dynasty": "春秋后期",
+    "description": "这件镈用以悬挂的钮由两兽相对而成，两面有36枚扁平乳丁，构成镈身纹饰的主体，其余部分则饰以蟠虺纹。镈的两面正中和左右下角共铸铭文20行48字，铭文内容难以释读，过去的学者依稀认出了“能原”二字，故名之为“能原钟”，或干脆承认无法释读，名之为“奇字钟”。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E7%8E%AF%E5%B8%A6%E7%BA%B9%E7%94%97.jpg",
+    "title": "环带纹甗",
+    "dynasty": "春秋后期",
+    "description": "甑为长方深箱形，侈口，立耳，口内有隔，大腹，腹壁斜收，平底有箅孔，下部有插入鬲口的榫圈。鬲为侈口斜肩，肩上有一对圆角方耳，平裆蹄形足。甑体饰环带纹。甗出现于商早期，至西周早期形成方形甗，至此甗均为连体式（即甑、鬲连铸）。春秋早期出现分体式甗。此甗为1923年河南新郑出土。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%8D%86%E5%85%AC%E5%AD%99%E6%95%A6.jpg",
+    "title": "荆公孙敦",
+    "dynasty": "春秋后期",
+    "description": "敦侈口，束颈，耳作环形，圜底下具三个兽蹄足。盖与器不完全对称，盖低于器高，无耳，上有三个兽蹄形钮，可却置。盖、器通饰乳丁纹。盖内有铭文3行15字：荆公孙铸其膳敦，老寿用之，宝无期。铭文大意为荆公孙自铸食敦，长寿用它，连宝无期。敦为盛黍、稷、稻、粱之器。最大的特点是盖与器能合成球形或椭圆球形，因有“西瓜敦”之称。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%9F%A0%E8%99%BA%E7%BA%B9%E4%B8%89%E9%B8%9F%E7%9B%96%E8%B1%86.jpg",
+    "title": "蟠虺纹三鸟盖豆",
+    "dynasty": "春秋后期",
+    "description": "豆大腹，高足，有盖。盖上饰三立鸟及蟠虺纹、綯纹等三道纹饰，器身上饰蟠虺纹、綯纹等二道纹饰。此豆花纹精巧，所饰蟠虺纹为春秋时铜器上盛行的纹饰，其造型新颖，全器风格突破了商周以来凝重奇诡的传统。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%87%A0%E4%BD%95%E7%BA%B9%E8%B1%86.jpg",
+    "title": "几何纹豆",
+    "dynasty": "春秋后期",
+    "description": "盖与豆盘扣合呈扁球形，盖上有类似喇叭形的圆形捉手，可倒置以盛物。豆盘两侧置环形耳，下承短柄圈足。捉手内一周三角云纹。口沿处与盘身饰有三角云纹与菱形几何纹，圈足上饰有蟠螭纹。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%9F%A0%E8%99%BA%E7%BA%B9%E8%B1%86.jpg",
+    "title": "蟠虺纹豆",
+    "dynasty": "春秋后期",
+    "description": "豆大腹，双附耳，圈足。有盖，上有透空握，握饰雷纹，盖、腹饰蟠虺纹。青铜豆出现于商晚期，盛行于春秋战国时期。本器为河南辉县出土，体形较大。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%9F%A0%E8%99%BA%E7%BA%B9%E9%BC%8E.jpg",
+    "title": "蟠虺纹鼎",
+    "dynasty": "春秋后期",
+    "description": "鼎大腹，圆底，蹄形足。有盖，盖饰三环钮和三道蟠虺纹。双附耳，耳两面饰蟠虺纹，两侧饰回纹。腹饰二道蟠虺纹，间以绳纹。足饰兽面纹。此鼎器体较大，花纹精细。盖上的三环钮是春秋时期鼎的重要特征，以蟠虺纹为主体纹饰，也体现了春秋时期器物的特点。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%85%B6%E6%AC%A1%E5%8B%BE%E9%91%83.jpg",
+    "title": "其次勾鑃",
+    "dynasty": "春秋后期",
+    "description": "器曲口，腔体窄而深，两侧略倾，长柄。腔体近柄处饰回纹和蕉叶纹。两侧鼓部有铭文32字，大意是：在正月第一个吉日丁亥这一天，其次选上好的铜料铸此勾鑃，用来祭享以表达孝意，祈求万寿。子孙后代，永保用之。此器为浙江武康山出土，同出7枚，其中两件有铭文。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%9F%A0%E8%99%BA%E7%BA%B9%E9%89%B4.jpg",
+    "title": "蟠虺纹鉴",
+    "dynasty": "春秋后期",
+    "description": "鉴窄口缘，束颈，短肩。四兽耳衔环，两两相对。腹部圜收，下有短圈足。鉴身的主体纹饰是相互缠绕、呈网格状布局的虺纹，在中部加饰两道凸起的三角云纹带。足饰两周横向排列的海贝纹。此鉴整体造型与装饰匀称谐调，是鉴中的佳品。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E7%9F%A2%E9%95%9E.jpg",
+    "title": "矢镞",
+    "dynasty": "春秋后期",
+    "description": "此矢镞锐锋，两翼张开，翼端呈收削之势。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%82%97%E7%8E%8B%E6%98%AF%E9%87%8E%E6%88%88.jpg",
+    "title": "邗王是野戈",
+    "dynasty": "春秋后期",
+    "description": "吴国兵器。舌形短援，援末下垂成胡，胡后有扁圆形銎，上有一穿。内呈镂空的鸟兽状。援两面有8字铭文：“邗王是野，作为元用。”意为吴王是野做此自用戈。“邗王”即“吴王”，由文献和实物得以求证。此戈造型新颖独特，漂亮的镂空纹饰使人耳目一新。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E7%A7%A6%E5%AD%90%E6%88%88.jpg",
+    "title": "秦子戈",
+    "dynasty": "春秋后期",
+    "description": "戈长刃，直“内”，内上有一长“穿”，“胡”上有三穿，有“栏”。援上刻划铭文15字，记秦子(秦子指初即位的幼君)做戈，秦君自用，左右两军，迅速出动。宜地（“宜”为地名）所造。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%9F%A0%E8%9E%AD%E7%BA%B9%E7%BC%96%E9%95%88.jpg",
+    "title": "蟠螭纹编镈",
+    "dynasty": "春秋后期",
+    "description": "三器均为阔腔平口，截面呈椭圆形。钮为镂空的蟠螭形，舞、篆、隧等处饰蟠虺纹，有36个乳丁枚。此套编镈形体巨大而不笨拙，厚重中寓精巧，威严中寓柔美，是铜镈中组合完美之器。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%9F%A0%E8%99%BA%E7%BA%B9%E9%95%88.jpg",
+    "title": "蟠虺纹镈",
+    "dynasty": "春秋后期",
+    "description": "此镈深腔平口，截面为椭圆形。透空蟠虺纹钮，层层相错，华丽且工整。“舞”、“篆”、“隧”等处均饰蟠虺纹，有36个乳丁“枚”。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%85%BD%E5%BD%A2%E5%8C%9C.jpg",
+    "title": "兽形匜",
+    "dynasty": "春秋后期",
+    "description": "匜浅腹，兽头形曲管式流，龙形鋬，圜底下具4个扁兽足。全器满布纹饰，匜腹上一条条一首双身的螭龙相互纠结，螭目突出，构图明快简洁。龙形鋬的龙首下探，衔于匜尾，龙尾下垂，尾端外卷，龙身隆起作弓形，龙背、龙首处各立一小龙。此龙形鋬造型之生动，装饰之繁缛，在东周铜匜中非常突出。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%8C%8F%E5%BD%A2%E5%8C%9C.jpg",
+    "title": "匏形匜",
+    "dynasty": "春秋后期",
+    "description": "匜作半匏状，曲缘，近口处饰一周绹纹。短槽流，与流相对的一侧腹部内收，鋬衔小环。下具3个扁长的矮足。《左传》有“奉匜沃盥”之语，所以匜当为盥洗注水之器。本器设计成瓢形正是应其功用而为。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%85%BD%E8%80%B3%E8%99%8E%E8%B6%B3%E6%96%B9%E5%A3%B6.jpg",
+    "title": "兽耳虎足方壶",
+    "dynasty": "春秋后期",
+    "description": "此壶有盖，盖似华冠。直口厚唇，束颈修长似扁方筒，鼓腹，圆形底。颈饰蕉叶纹，颈两侧附一对壮硕的龙形耳，龙回首卷尾呈蹲立状，双龙耳上铸有细缕孔。腹饰界栏状凸棱，上区饰蟠虺纹，下区光素无纹。圈足饰蟠虺纹和云纹，足下卧二虎。此壶造型优雅，纹饰繁缛精美，龙虎上下呼应，栩栩如生。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%94%A1%E5%AD%90%E5%8C%9C.jpg",
+    "title": "蔡子匜",
+    "dynasty": "春秋后期",
+    "description": "曲缘，浅腹，短槽流，小圆钮形鋬，平底。口外饰雷纹和蟠虺纹。器内底有铭文 2 行 7 字，为 “蔡子佗自作会匜”，大意是蔡国的公子佗自做盛盥洗用水的匜。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%A8%84%E5%90%9B%E7%9B%82.jpg",
+    "title": "娄君盂",
+    "dynasty": "春秋后期",
+    "description": "此盂敛颈，折肩，腹圜收，平底，肩上有二兽耳。颈、腹部以两周绹纹作界栏饰于主纹上下。主纹具有浓厚的地方特色，在小方格内饰横竖线条为地纹，每一方格内有多枚具有一定长度的青铜刺，细如针尖，整体效果是尖刺密集丛生。器内底有铭文6行26字，大意是：在正月的第一个吉日，娄国国君伯□自做盛食之盂，用来祈求长寿无疆，子孙后代宝用此盂。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E6%9C%89%E9%92%A9%E7%9F%9B.jpg",
+    "title": "有钩矛",
+    "dynasty": "春秋后期",
+    "description": "矛窄长无叶，骹呈锐管状，一侧伸出有刃的弯钩。矛是直刺兵器，此矛同时带有刃弯钩，使之能刺能钩，提高了杀伤力。但是使用钩的时候，其反向作用力易使矛头脱落。此类钩矛在后世发现极少。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%B0%91%E8%99%A1%E5%89%91.jpg",
+    "title": "少虡剑",
+    "dynasty": "春秋后期",
+    "description": "少虡剑为晋国兵器，山西李峪村出土，已知同铭剑有3件。此剑前锋断，脊在两从间凹陷，从宽斜，前锷狭，厚格呈倒凹字形，圆茎无箍，圆形首。格饰错金嵌绿松石兽面纹，剑首饰错金云纹。剑脊上有错金铭文20字，每面10字：“吉日壬午，乍为元用，玄镠铺吕。朕余名之，胃之少虡。”“玄镠”和“铺吕”为制剑的金属材料锡与铜，“胃”通“谓”。铭文的大意为：壬午这天吉日，做了这把好用的剑，做剑的原料是锡与铜。我给这把剑起了个名字，称为“少虡”。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E7%8B%A9%E7%8C%8E%E7%BA%B9%E8%B1%86.jpg",
+    "title": "狩猎纹豆",
+    "dynasty": "春秋后期",
+    "description": "豆硕腹，作半球形，双环耳，高柄，圈足。腹饰嵌红铜狩猎纹，足饰鸟兽纹。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%8F%94%E6%9C%95%E7%B0%A0.jpg",
+    "title": "叔朕簠",
+    "dynasty": "春秋后期",
+    "description": "叔朕簠为长方形，直口，折壁，折壁上有兽头环耳，腹较深，方圈足的各边有缺。器身饰蟠螭纹。器内有5行37字铭文，铭文大意为在十月第一个吉日庚午这一天，叔朕选用上好的铜料自做向神进献的簠，祈望得到好的收成，万寿无疆，叔朕长寿，子孙后代以此簠为宝。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%BE%99%E8%80%B3%E7%B0%8B.jpg",
+    "title": "龙耳簋",
+    "dynasty": "春秋后期",
+    "description": "龙耳簋侈口束颈，双龙耳，矮体宽腹，圈足下连与座。盖捉手作莲瓣状，中央饰蟠虺纹；盖边、腹、座饰云带纹并间以重环纹。春秋中晚期，簋虽然不再流行，但尚未绝迹，型制上较春秋初期有较大的变化。本器造型雄伟，气势磅礴，是这一时期簋的标准器。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%94%A1%E5%AD%90%E9%BC%8E.jpg",
+    "title": "蔡子鼎",
+    "dynasty": "春秋后期",
+    "description": "蔡子鼎器身连盖近球形，盖上有透空捉手，盖、腹、足相对应各铸二环，能用绳穿系，附直耳，下具三个兽蹄足。通体饰变形蟠虺纹和三角纹。盖上铸有5字铭文：“蔡子?之鼎”。记此鼎为蔡子?所有。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%9F%A0%E8%99%BA%E7%BA%B9%E5%A4%A7%E9%BC%8E.jpg",
+    "title": "蟠虺纹大鼎",
+    "dynasty": "春秋后期",
+    "description": "鼎圆形，侈口，敛颈，有附耳，圆底，蹄形足，腹前后有环，环上饰兽头。颈饰重环纹、蟠虺纹、三角纹，腹上下饰二道绳纹，间饰蟠虺纹、下垂蕉叶纹，足饰兽面纹。此鼎是1923年河南新郑出土器中最大的鼎，其蹄形足具有春秋时期鼎足的典型特征。"
+}
+        ];
+    
+        const itemsPerPage = 8;
+        let currentPage = 1;
+    
+        // 获取弹窗相关元素
+        const modal = document.getElementById("myModal");
+        const itemName = document.getElementById("itemName");
+        const itemImage = document.getElementById("itemImage");
+        const itemDynasty = document.getElementById("itemDynasty");        
+        const itemDescription = document.getElementById("itemDescription");
+    
+        // 获取关闭按钮元素
+        const span = document.getElementsByClassName("close")[0];
+    
+        // 点击关闭按钮关闭弹窗
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+    
+        // 点击弹窗外区域关闭弹窗
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    
+        // 显示图片的函数
+        function displayImages(page) {
+            const start = (page - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const content = document.getElementById('content');
+            content.innerHTML = '';
+    
+            images.slice(start, end).forEach(item => {
+                const a = document.createElement('a');
+                a.onclick = function(e) {
+                    e.preventDefault();
+                    itemName.textContent = item.title;
+                    itemImage.src = item.src;
+                    itemDynasty.textContent = `朝代：${item.dynasty}`;
+                    itemDescription.textContent = item.description;
+                    modal.style.display = "block";
+                };
+    
+                const img = document.createElement('img');
+                img.src = item.src;
+                img.className = "item-image";
+                img.alt = "图片无法加载";
+    
+                const title = document.createElement('div');
+                title.className = "item-introduction";
+                title.textContent = item.title;
+    
+                a.appendChild(img);
+                a.appendChild(title);
+                content.appendChild(a);
+            });
+    
+            updatePagination();
+        }
+    
+        // 更新分页信息
+        function updatePagination() {
+            const totalPages = Math.ceil(images.length / itemsPerPage);
+            document.getElementById('pageInfo').textContent = `${currentPage} / ${totalPages}`;
+            document.getElementById('prevBtn').disabled = currentPage === 1;
+            document.getElementById('nextBtn').disabled = currentPage === totalPages;
+        }
+    
+        // 切换页面
+        function changePage(offset) {
+            currentPage += offset;
+            displayImages(currentPage);
+        }
+    
+        // 初始化页面
+        displayImages(currentPage);
+    </script>
+</body>
+</html>
