@@ -237,7 +237,7 @@
             <i class="iconfont icon-shouye"></i> <!-- 房子图标 -->
             首页
         </a>
-        <a href="https://meeting-bronze.github.io/bronze">
+        <a href="https://meeting-bronze.github.io/bronze" class="active">
             <i class="iconfont icon-pot"></i> <!-- 人物图标 -->
             青铜器
         </a>
@@ -245,7 +245,7 @@
             <i class="iconfont icon-gudai"></i> <!-- 加号图标 -->
             文创产品
         </a>
-        <a href="https://meeting-bronze.github.io/information" class="active">
+        <a href="https://meeting-bronze.github.io/information">
             <i class="iconfont icon-ziliaoku"></i> <!-- 对话框图标 -->
             资料推荐
         </a>
@@ -272,11 +272,16 @@
         const items = [
             {
                 mainImage: "https://yty93669.oss-cn-beijing.aliyuncs.com/文献/1",
-                title: "馆藏青铜器上的巴蜀符号研究与鉴赏",
+                title: "东周青铜器车马图像研究",
                 keywords: "关键词：博物馆 青铜器 巴蜀符号 研究与鉴赏",
                 contentImages: [
-                    "https://yty93669.oss-cn-beijing.aliyuncs.com/文献/1/content1",
-                    "https://yty93669.oss-cn-beijing.aliyuncs.com/文献/1/content2"
+                    "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/information/%E4%B8%9C%E5%91%A8%E9%9D%92%E9%93%9C%E5%99%A8%E8%BD%A6%E9%A9%AC%E5%9B%BE%E5%83%8F%E7%A0%94%E7%A9%B6/%E4%B8%9C%E5%91%A8%E9%9D%92%E9%93%9C%E5%99%A8%E8%BD%A6%E9%A9%AC%E5%9B%BE%E5%83%8F%E7%A0%94%E7%A9%B6_00.png",
+                    "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/information/%E4%B8%9C%E5%91%A8%E9%9D%92%E9%93%9C%E5%99%A8%E8%BD%A6%E9%A9%AC%E5%9B%BE%E5%83%8F%E7%A0%94%E7%A9%B6/%E4%B8%9C%E5%91%A8%E9%9D%92%E9%93%9C%E5%99%A8%E8%BD%A6%E9%A9%AC%E5%9B%BE%E5%83%8F%E7%A0%94%E7%A9%B6_01.png",
+                    "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/information/%E4%B8%9C%E5%91%A8%E9%9D%92%E9%93%9C%E5%99%A8%E8%BD%A6%E9%A9%AC%E5%9B%BE%E5%83%8F%E7%A0%94%E7%A9%B6/%E4%B8%9C%E5%91%A8%E9%9D%92%E9%93%9C%E5%99%A8%E8%BD%A6%E9%A9%AC%E5%9B%BE%E5%83%8F%E7%A0%94%E7%A9%B6_02.png",
+                    "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/information/%E4%B8%9C%E5%91%A8%E9%9D%92%E9%93%9C%E5%99%A8%E8%BD%A6%E9%A9%AC%E5%9B%BE%E5%83%8F%E7%A0%94%E7%A9%B6/%E4%B8%9C%E5%91%A8%E9%9D%92%E9%93%9C%E5%99%A8%E8%BD%A6%E9%A9%AC%E5%9B%BE%E5%83%8F%E7%A0%94%E7%A9%B6_03.png",
+                    "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/information/%E4%B8%9C%E5%91%A8%E9%9D%92%E9%93%9C%E5%99%A8%E8%BD%A6%E9%A9%AC%E5%9B%BE%E5%83%8F%E7%A0%94%E7%A9%B6/%E4%B8%9C%E5%91%A8%E9%9D%92%E9%93%9C%E5%99%A8%E8%BD%A6%E9%A9%AC%E5%9B%BE%E5%83%8F%E7%A0%94%E7%A9%B6_04.png",
+                    "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/information/%E4%B8%9C%E5%91%A8%E9%9D%92%E9%93%9C%E5%99%A8%E8%BD%A6%E9%A9%AC%E5%9B%BE%E5%83%8F%E7%A0%94%E7%A9%B6/%E4%B8%9C%E5%91%A8%E9%9D%92%E9%93%9C%E5%99%A8%E8%BD%A6%E9%A9%AC%E5%9B%BE%E5%83%8F%E7%A0%94%E7%A9%B6_05.png",  
+                    "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/information/%E4%B8%9C%E5%91%A8%E9%9D%92%E9%93%9C%E5%99%A8%E8%BD%A6%E9%A9%AC%E5%9B%BE%E5%83%8F%E7%A0%94%E7%A9%B6/%E4%B8%9C%E5%91%A8%E9%9D%92%E9%93%9C%E5%99%A8%E8%BD%A6%E9%A9%AC%E5%9B%BE%E5%83%8F%E7%A0%94%E7%A9%B6_06.png",
                 ]
             },
             {
