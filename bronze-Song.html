@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/c/font_4731064_jvjmjota6g.css">
+    <title>宋朝青铜器</title>
+    <style>
+        /* 重置样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            max-width: 375px;
+            margin: 0 auto;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            border: #888 solid 1px;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content {
+            flex: 1;
+            background-color: #faf8f8;
+            text-align: center; 
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        .content a {
+            width: 48%;
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 3%;
+            color: black;
+            text-decoration: none;
+            transition: transform 0.3s;
+            cursor: pointer;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .content a:hover {
+            transform: scale(1.05);
+        }
+
+        .item-image {
+            width: 100%;
+            object-fit: cover;
+            aspect-ratio: 1;
+        }
+
+        .item-introduction {
+            width: 100%;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 20px;
+        }
+
+        /* 底部导航栏样式 */
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+            box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-nav a {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            color: #333;
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .footer-nav a:hover {
+            color: #1AAD19;
+        }
+
+        .footer-nav a i {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .footer-nav a.active {
+            color: #ffbb00;
+        }
+
+        /* 底部分页样式 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .pagination span {
+            margin: 0 10px;
+        }
+
+        .pagination button {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .pagination button:disabled {
+            color: #ddd;
+            cursor: not-allowed;
+        }
+
+        /* 弹窗样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 375px;
+            border-radius: 10px;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .modal-content p {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <img src="https://yty93669.oss-cn-beijing.aliyuncs.com/青铜奇缘/bronze/单页标题" style="width:100%;height:auto">
+    <div style="width:100%;text-align: center;font-size: 20px;margin:10px 0">-宋朝青铜器-</div>
+
+    <div class="content" id="content">
+        <!-- 图片内容将通过JavaScript动态添加 -->
+    </div>
+    
+    <!-- 分页按钮容器 -->
+    <div class="pagination" id="pagination">
+        <button id="prevBtn" onclick="changePage(-1)" disabled>&lt;</button>
+        <span id="pageInfo">1 / 1</span>
+        <button id="nextBtn" onclick="changePage(1)">&gt;</button>
+    </div>
+    
+    <div style="height: 80px;"></div>
+    
+    <!-- 底部导航栏 -->
+   <nav class="footer-nav">
+    <a href="https://meeting-bronze.github.io/index" >
+        <i class="iconfont icon-shouye"></i> <!-- 房子图标 -->
+        首页
+    </a>
+    <a href="https://meeting-bronze.github.io/bronze" class="active">
+        <i class="iconfont icon-pot"></i> <!-- 人物图标 -->
+        青铜器
+    </a>
+    <a href="https://meeting-bronze.github.io/products">
+        <i class="iconfont icon-gudai"></i> <!-- 加号图标 -->
+        文创产品
+    </a>
+    <a href="https://meeting-bronze.github.io/information">
+        <i class="iconfont icon-ziliaoku"></i> <!-- 对话框图标 -->
+        资料推荐
+    </a>
+    
+</nav>
+
+    
+    <!-- 弹窗 -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="itemName"></h2>
+            <img id="itemImage" src="" alt="图片无法加载">
+            <p id="itemDynasty"></p>
+            <p id="itemDescription"></p>
+        </div>
+    </div>
+    
+    <script>
+        // 图片数据
+        const images = [
+        {
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E2%80%9C%E5%A4%A7%E5%92%8C%C2%B7%E5%A4%B9%E9%92%9F%E6%B8%85%E2%80%9D%E9%92%9F.jpg",
+    "title": "“大和·夹钟清”钟",
+    "dynasty": "北宋",
+    "description": "此钟原为宋徽宗朝所铸“大晟”编钟之一，后被金兵劫走，分散在燕京和上京两地。钟属椭圆筒式乐钟，钮作相对的扁体双夔龙，钲部周廓及篆带饰多层蟠虺纹，乳枚作螺旋式半球体。钲部正中正面阴刻篆书“大和”二字，背面阴刻篆书律名“夹钟清”三字。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%AE%A3%E5%92%8C%E5%B0%8A.jpg",
+    "title": "宣和尊",
+    "dynasty": "北宋",
+    "description": "宣和尊属三段式筒状尊，广口，鼓腹，圈足。通体饰花纹，口沿下饰仰叶纹，颈部为垂首弓身小蚕纹，腹部和圈足饰兽面纹。器身还装饰了4条扉棱，上端齐于口沿。尊内底铸大篆5行26字，记录了尊的定名、尊主、制作时间和用途。"
+},
+
+        ];
+    
+        const itemsPerPage = 8;
+        let currentPage = 1;
+    
+        // 获取弹窗相关元素
+        const modal = document.getElementById("myModal");
+        const itemName = document.getElementById("itemName");
+        const itemImage = document.getElementById("itemImage");
+        const itemDynasty = document.getElementById("itemDynasty");        
+        const itemDescription = document.getElementById("itemDescription");
+    
+        // 获取关闭按钮元素
+        const span = document.getElementsByClassName("close")[0];
+    
+        // 点击关闭按钮关闭弹窗
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+    
+        // 点击弹窗外区域关闭弹窗
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    
+        // 显示图片的函数
+        function displayImages(page) {
+            const start = (page - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const content = document.getElementById('content');
+            content.innerHTML = '';
+    
+            images.slice(start, end).forEach(item => {
+                const a = document.createElement('a');
+                a.onclick = function(e) {
+                    e.preventDefault();
+                    itemName.textContent = item.title;
+                    itemImage.src = item.src;
+                    itemDynasty.textContent = `朝代：${item.dynasty}`;
+                    itemDescription.textContent = item.description;
+                    modal.style.display = "block";
+                };
+    
+                const img = document.createElement('img');
+                img.src = item.src;
+                img.className = "item-image";
+                img.alt = "图片无法加载";
+    
+                const title = document.createElement('div');
+                title.className = "item-introduction";
+                title.textContent = item.title;
+    
+                a.appendChild(img);
+                a.appendChild(title);
+                content.appendChild(a);
+            });
+    
+            updatePagination();
+        }
+    
+        // 更新分页信息
+        function updatePagination() {
+            const totalPages = Math.ceil(images.length / itemsPerPage);
+            document.getElementById('pageInfo').textContent = `${currentPage} / ${totalPages}`;
+            document.getElementById('prevBtn').disabled = currentPage === 1;
+            document.getElementById('nextBtn').disabled = currentPage === totalPages;
+        }
+    
+        // 切换页面
+        function changePage(offset) {
+            currentPage += offset;
+            displayImages(currentPage);
+        }
+    
+        // 初始化页面
+        displayImages(currentPage);
+    </script>
+</body>
+</html>

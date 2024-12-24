@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/c/font_4731064_jvjmjota6g.css">
+    <title>战国时期青铜器</title>
+    <style>
+        /* 重置样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            max-width: 375px;
+            margin: 0 auto;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            border: #888 solid 1px;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content {
+            flex: 1;
+            background-color: #faf8f8;
+            text-align: center; 
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        .content a {
+            width: 48%;
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 3%;
+            color: black;
+            text-decoration: none;
+            transition: transform 0.3s;
+            cursor: pointer;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .content a:hover {
+            transform: scale(1.05);
+        }
+
+        .item-image {
+            width: 100%;
+            object-fit: cover;
+            aspect-ratio: 1;
+        }
+
+        .item-introduction {
+            width: 100%;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 20px;
+        }
+
+        /* 底部导航栏样式 */
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+            box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-nav a {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            color: #333;
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .footer-nav a:hover {
+            color: #1AAD19;
+        }
+
+        .footer-nav a i {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .footer-nav a.active {
+            color: #ffbb00;
+        }
+
+        /* 底部分页样式 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .pagination span {
+            margin: 0 10px;
+        }
+
+        .pagination button {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .pagination button:disabled {
+            color: #ddd;
+            cursor: not-allowed;
+        }
+
+        /* 弹窗样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 375px;
+            border-radius: 10px;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .modal-content p {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <img src="https://yty93669.oss-cn-beijing.aliyuncs.com/青铜奇缘/bronze/单页标题" style="width:100%;height:auto">
+    <div style="width:100%;text-align: center;font-size: 20px;margin:10px 0">-战国时期青铜器-</div>
+
+    <div class="content" id="content">
+        <!-- 图片内容将通过JavaScript动态添加 -->
+    </div>
+    
+    <!-- 分页按钮容器 -->
+    <div class="pagination" id="pagination">
+        <button id="prevBtn" onclick="changePage(-1)" disabled>&lt;</button>
+        <span id="pageInfo">1 / 1</span>
+        <button id="nextBtn" onclick="changePage(1)">&gt;</button>
+    </div>
+    
+    <div style="height: 80px;"></div>
+    
+    <!-- 底部导航栏 -->
+   <nav class="footer-nav">
+    <a href="https://meeting-bronze.github.io/index" >
+        <i class="iconfont icon-shouye"></i> <!-- 房子图标 -->
+        首页
+    </a>
+    <a href="https://meeting-bronze.github.io/bronze" class="active">
+        <i class="iconfont icon-pot"></i> <!-- 人物图标 -->
+        青铜器
+    </a>
+    <a href="https://meeting-bronze.github.io/products">
+        <i class="iconfont icon-gudai"></i> <!-- 加号图标 -->
+        文创产品
+    </a>
+    <a href="https://meeting-bronze.github.io/information">
+        <i class="iconfont icon-ziliaoku"></i> <!-- 对话框图标 -->
+        资料推荐
+    </a>
+    
+</nav>
+
+    
+    <!-- 弹窗 -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="itemName"></h2>
+            <img id="itemImage" src="" alt="图片无法加载">
+            <p id="itemDynasty"></p>
+            <p id="itemDescription"></p>
+        </div>
+    </div>
+    
+    <script>
+        // 图片数据
+        const images = [
+        {
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%9F%A0%E8%9E%AD%E7%BA%B9%E7%9B%89.jpg",
+    "title": "蟠螭纹盉",
+    "dynasty": "战国",
+    "description": "蟠螭纹盉捐献自章乃器，具体尺寸和重量信息未提供。盉大口外侈，有一周平边，颈大而短，广肩，上饰双兽耳，耳上套环，大腹，平底。以蟠螭纹为主题纹饰。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%BE%9F%E5%A4%A7%E5%A4%AB%E8%99%8E%E7%AC%A6.jpg",
+    "title": "辟大夫虎符",
+    "dynasty": "战国",
+    "description": "符作卧虎状，昂首，尾上卷。虎身表面刻铭文11字：“辟大夫信节，堳丘与塿纸，贵”。这件虎符是古代帝王授予臣属兵权和调拨军队用的信物，现存最早的铜符是战国时期的，秦汉时代的符亦多采用虎符的形式。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E7%8E%8B%E5%91%BD%E4%BC%A0%E4%BB%BB%E8%99%8E%E8%8A%82.jpg",
+    "title": "王命传任虎节",
+    "dynasty": "战国",
+    "description": "王命传任虎节，传安徽寿县出土，表示持虎节者以王命命传遽者发车马、供饮食。此节是出入关驿的一种凭证。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%AE%B4%E4%B9%90%E6%B8%94%E7%8C%8E%E6%94%BB%E6%88%98%E7%BA%B9%E5%9B%BE%E5%A3%B6.jpg",
+    "title": "宴乐渔猎攻战纹图壶",
+    "dynasty": "战国前期",
+    "description": "壶侈口，斜肩，鼓腹，矮圈足，肩上有二兽首衔环耳。花纹从口至圈足分段分区布置，上层颈部描绘采桑和习射活动，中层上腹部描绘宴乐场面和射猎场面，下层下腹部描绘攻城和水战的厮杀场面。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%BE%9F%E9%B1%BC%E7%BA%B9%E6%96%B9%E7%9B%98.jpg",
+    "title": "龟鱼纹方盘",
+    "dynasty": "战国前期",
+    "description": "盘作长方体，口沿外翻，浅腹，平底，四兽首衔环，底部铸有四兽形足。口沿饰蟠螭纹，内底饰龟鱼戏水图案，内壁饰曲带纹，外壁饰云纹及浮雕怪兽。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%9E%AD%E6%A2%81%E7%9B%89.jpg",
+    "title": "螭梁盉",
+    "dynasty": "战国前期",
+    "description": "短颈，广肩，有提梁，肩部有流，圆体，鼓腹，腹底圆，下有三异兽形足。提梁整体作镂空螭形，盖顶正中有一猴形钮，流作鸟首形，鸟首顶上伏卧一小虎。三足为站立的怪兽，人面鸟咀，额上有双角，身侧有两翼，前爪左右各抓一蛇，形象奇诡。盉通体满饰花纹，盖顶饰云纹，盖边饰蟠螭纹，肩及腹下饰勾连云纹，腹中部饰蟠螭纹，流饰羽纹。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%B5%8C%E8%B5%A4%E9%93%9C%E8%B1%A1%E7%BA%B9%E4%BA%94%E7%8E%AF%E5%B8%A6%E7%9B%96%E5%A3%B6.jpg",
+    "title": "嵌赤铜象纹五环带盖壶",
+    "dynasty": "战国前期",
+    "description": "器直口，粗颈，鼓腹，器形硕大，有平盖，环形钮，是一种大型的盛酒器。壶身正面有一系环，另在肩部两侧及腹部靠下处铸有对称的两对系环，便于搬运携带。颈部采用浅浮雕手法铸出一周突起的象纹，象纹简洁而抽象，通过庞大的身躯、长卷的鼻子表现出大象的主要特征。壶的腹部用嵌赤铜工艺装饰龙纹，嵌赤铜的制作工艺相当复杂，铸器时在体表预留出凹槽，再注入赤铜而成。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%B5%8C%E6%9D%BE%E7%9F%B3%E7%BC%B6.jpg",
+    "title": "嵌松石缶",
+    "dynasty": "战国前期",
+    "description": "缶小口，直颈，弧腹，最大径在上腹部，下敛，平底，矮圈足。花纹共分5层：第一层在口下，第二至第五层在腹部。腹上的4层纹饰均以双弦纹圈为界纹。第一至第四层纹饰为几何形图案，第五层纹饰为垂叶纹带。此铜缶表面所铸的浅凹的花纹只是其装饰的一部分，铸造者最初在花纹的凹槽中还嵌入了松石粉或黑色涂料，现已全部脱落。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%9B%99%E7%BA%B9%E5%8C%9C.jpg",
+    "title": "蛙纹匜",
+    "dynasty": "战国前期",
+    "description": "匜一侧有兽头形流，兽双目上视，侧立耳，阔口方便泄水，兽头顶部饰有蛙纹。另一侧为屈舌兽首鋬。宽腹上部仅饰一周以双线勾边的三角纹带。圆底下有3只兽足。此器造型独特，构思巧妙，特别是器流的造型极具创意。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%B1%BC%E5%BD%A2%E5%A3%B6.jpg",
+    "title": "鱼形壶",
+    "dynasty": "战国前期",
+    "description": "壶通体作立鱼形，鱼口向上为壶口，鱼尾向下为足。壶上部有兽首衔环一对，鱼眼嵌金为饰。此壶造型精美独特，线条流畅，形象逼真，展现了战国时期青铜器造型和纹饰的生活化、写实化风格。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%94%99%E9%87%91%E9%93%B6%E9%B8%9F%E8%80%B3%E5%A3%B6.jpg",
+    "title": "错金银鸟耳壶",
+    "dynasty": "战国前期",
+    "description": "壶扁平敞口，束颈，伏鸟状穿环双耳，鼓腹，圈足。口沿镂空处雕兽纹，平缘处饰绳纹。颈部饰错金银嵌绿松石云纹。肩、腹部饰流云纹并以绳纹间隔。圈足上饰贝纹一周。此壶设计独特，镶嵌精细，伏鸟状双耳栩栩如生，云纹古朴流畅，体现了战国时期铜器制作工艺之精湛。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%94%99%E9%87%91%E4%BA%91%E7%BA%B9%E6%95%A6.jpg",
+    "title": "错金云纹敦",
+    "dynasty": "战国前期",
+    "description": "器作半球形，双环耳，三短足。通体错金花纹。口沿饰几何纹一周，腹中部饰流云纹，下部饰窃曲纹、垂叶纹，足饰兽面纹。原有盖，已失。此器为清宫旧藏文物。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%9F%A0%E8%9E%AD%E7%BA%B9%E8%B1%86.jpg",
+    "title": "蟠螭纹豆",
+    "dynasty": "战国前期",
+    "description": "豆圆体，双附耳，矮圈足，平盖，上铸有四环。盖面及腹部各饰蟠螭纹一周，耳上饰回纹，腹下部有三处突起痕迹，足有四穿孔。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E7%BE%BD%E7%BA%B9%E5%9B%9B%E8%80%B3%E7%BC%B6.jpg",
+    "title": "羽纹四耳缶",
+    "dynasty": "战国前期",
+    "description": "缶圆体，直颈，圆肩，大腹，圈足，有四兽首衔环耳。颈、腹部饰羽纹，肩部饰蟠螭纹，腹下部饰垂叶纹，垂叶纹内为兽面纹。此器为清宫旧藏文物，熟坑。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%A4%96%E5%8D%92%E9%93%8E.jpg",
+    "title": "外卒铎",
+    "dynasty": "战国前期",
+    "description": "铎桥形口，方柄中空，柄内有横梁，隧饰兽面纹。隧两面分别有铭文5字，一面为铸造文字：“外卒铎”。一面为刻画文字：“锺尹。”“外卒铎”记此为外卒之铎，“锺尹”则是官名。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%B5%8C%E7%BA%A2%E9%93%9C%E9%BE%99%E7%BA%B9%E7%93%BF.jpg",
+    "title": "嵌红铜龙纹瓿",
+    "dynasty": "战国前期",
+    "description": "瓿圆体，小口，大腹，肩上有二环，有盖，盖顶部正中有一环。盖、器肩及腹下部饰菱纹，腹部饰龙纹。纹饰均以红铜镶嵌。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%B8%9F%E5%BD%A2%E7%9B%89.jpg",
+    "title": "鸟形盉",
+    "dynasty": "战国前期",
+    "description": "盉整体作立鸟形，虎形提梁，四兽足，盖与提梁间有活环相连，鸟首上喙与鼻间以活环相连接，倒水时可以自动张开。两翼饰大凤尾纹。足、流尾均为分铸后再与器身拼合为一体。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%B5%8C%E7%BA%A2%E9%93%9C%E9%B8%9F%E5%85%BD%E7%BA%B9%E5%A3%B6.jpg",
+    "title": "嵌红铜鸟兽纹壶",
+    "dynasty": "战国前期",
+    "description": "壶圆体，侈口，圈足，双兽首耳衔环。颈饰变体蕉叶纹、云纹，肩饰云纹，腹部正中以云纹一周将壶腹隔为二区，各饰鸟兽纹一周，腹下部饰交颈夔纹，圈足饰云纹。颈、肩、腹、足之云纹内以红铜镶嵌。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%B5%8C%E6%9D%BE%E7%9F%B3%E6%9C%AB%E8%9F%A0%E8%9E%AD%E7%BA%B9%E8%B1%86.jpg",
+    "title": "嵌松石末蟠螭纹豆",
+    "dynasty": "战国前期",
+    "description": "豆圆形，两侧有双环耳，束腰，高足，盖顶有平捉手，可以倒置。盖、器身饰蟠螭纹，高足两端饰垂叶纹，中部饰菱纹。通体纹饰均以松石末镶嵌。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%B5%8C%E7%BA%A2%E9%93%9C%E7%8B%A9%E7%8C%8E%E7%BA%B9%E5%A3%B6.jpg",
+    "title": "嵌红铜狩猎纹壶",
+    "dynasty": "战国前期",
+    "description": "壶圆体，侈口，盖顶双伏兽钮，圈足。器身被四圈宽带纹分为四层，各层均饰狩猎纹，宽带内饰三角云雷纹，足饰菱形花纹。通体纹饰均以红铜镶嵌。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%8D%95%E5%AD%9D%E5%AD%90%E9%BC%8E.jpg",
+    "title": "单孝子鼎",
+    "dynasty": "战国前期",
+    "description": "鼎圆体，三蹄形足，双附耳，有盖，盖上饰三牺。器身饰弦纹二周。盖、器对铭，各铸铭文16字：“王四月，单孝子以庚寅之日，命铸飤鼎鬲。”意为在王四月庚寅这一天，单孝子命铸煮食之鼎。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%90%9B%E5%AD%90%E4%B9%8B%E5%BC%84%E9%AC%B2.jpg",
+    "title": "君子之弄鬲",
+    "dynasty": "战国前期",
+    "description": "君子之弄鬲是春秋战国时期的小型青铜器，通常作为陈设或把玩之用。其尺寸较小，便于手持。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E6%A5%9A%E7%8E%8B%E9%85%93%E7%92%8B%E6%88%88.jpg",
+    "title": "楚王酓璋戈",
+    "dynasty": "战国前期",
+    "description": "戈长援，有“胡”，胡残，援及胡饰嵌金鸟篆铭文18字：“楚王酓璋严南越，用作戈，以邵扬文武之。”记楚王酓璋重击南越，作此车战用戈，用以宣扬先王之武功。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%B8%9F%E5%BD%A2%E5%8B%BA.jpg",
+    "title": "鸟形勺",
+    "dynasty": "战国后期",
+    "description": "勺身椭圆形，圜底圈足，身前部有突起的雀鸟形雕饰，后有单柄与之相对，柄呈平板状，上有繁缛的锦文。勺是舀酒器，这件勺有圈足，可以稳稳地置于几案上，因此又是一件可用来直接饮酒的器物。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%94%99%E9%87%91%E5%B5%8C%E6%9D%BE%E7%9F%B3%E5%B8%A6%E9%92%A9.jpg",
+    "title": "错金嵌松石带钩",
+    "dynasty": "战国后期",
+    "description": "此带钩呈细长弧形，末端作兽首。钩面饰错金几何形云纹，空隙处嵌绿松石。带钩作为贵族服饰用具，依主人身份地位的不同，其制作和装饰工艺也有所区别。此带钩不仅作工精湛，而且运用了复杂的错金嵌松石工艺进行装饰，堪称精品。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%94%99%E9%87%91%E5%87%A0%E4%BD%95%E7%BA%B9%E5%B8%A6%E9%92%A9.jpg",
+    "title": "错金几何纹带钩",
+    "dynasty": "战国后期",
+    "description": "此带钩为琵琶形兽头带钩，通体饰错金几何纹图案，风格独特，装饰华丽，有很强的立体感。战国时期铜带钩的式样较之以前大为增多，以此来满足贵族们的装饰需要。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E6%9C%89%E9%9E%98%E5%89%91.jpg",
+    "title": "有鞘剑",
+    "dynasty": "战国后期",
+    "description": "此剑首呈圆盘形，“茎”上有两周凸起的圆箍，格宽而厚，剑刃锋利。所配剑鞘用木板制成，外髹黑漆。战国时期剑不仅是兵器，也是古代贵族平时随身佩带之物，用以彰显自己的身份地位，亦可用以防身。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%85%BD%E9%A6%96%E7%BC%96%E7%A3%AC.jpg",
+    "title": "兽首编磬",
+    "dynasty": "战国后期",
+    "description": "磬是中国古代的打击乐器，多为石制。此套铜编磬由六件组成，均作宽扁条中折状，一端饰兽首，并有一圆穿孔。编磬是由若干只磬排成一组，每枚磬发出高低不同的音响，可以演奏乐曲。在宫廷雅乐或盛大祭典上，编磬与钟密切配合演奏。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%B5%8C%E6%9D%BE%E7%9F%B3%E9%95%BF%E5%89%91.jpg",
+    "title": "嵌松石长剑",
+    "dynasty": "战国后期",
+    "description": "剑身修长，有中脊，两侧出刃，刃作弧曲状，顶端收聚成尖锋。茎有二隔，剑首及镡上装饰由嵌松石和错金丝组成的几何图案。茎部仅存金丝二小段。此剑长达93.5cm，是名副其实的长剑。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%93%B8%E5%AE%A2%E7%BC%B6.jpg",
+    "title": "铸客缶",
+    "dynasty": "战国后期",
+    "description": "缶小口，短颈，大腹，肩部铸有四环，圈足。器口外有刻划铭文9字：“铸客为王后六室为之”。记外方冶铸匠人（铸客）为王后六室作此缶。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%95%9E.jpg",
+    "title": "镞",
+    "dynasty": "战国后期",
+    "description": "镞是箭头的意思，形容箭的锋利轻捷。在古代战争中，镞是箭矢的重要组成部分，用于射杀敌人。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%94%99%E9%93%B6%E8%9E%AD%E9%A6%96%E5%B8%A6%E9%92%A9.jpg",
+    "title": "错银螭首带钩",
+    "dynasty": "战国后期",
+    "description": "带钩是束腰皮带的挂钩，古又称“犀比”。此为条形兽首带钩。钩身饰直棱纹，末端作螭首，用浮雕手法装饰，纹饰清晰，风格豪放。带钩外部鎏银，光艳夺目。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%93%B8%E5%AE%A2%E8%B1%86.jpg",
+    "title": "铸客豆",
+    "dynasty": "战国后期",
+    "description": "豆圆体，直口，高柱圈足，通体无纹饰。器口沿刻划铭文9字：“铸客为王后六室为之”。记外方冶铸匠人——“铸客”为王后六室做此豆。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%A4%A7%E8%89%AF%E9%80%A0%E9%9E%85%E9%95%A6.jpg",
+    "title": "大良造鞅镦",
+    "dynasty": "战国后期",
+    "description": "镦圆筒状，平底，中空，有节，节下有相对的二穿孔。器身刻画铭文4行13字，记在十六年，大良造（“大良造”为官名）下庶长（“下庶长”为爵名）鞅（即史书所载“商鞅”）监造此镦。雍是铸造地或存放地。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%B8%9F%E7%BA%B9%E5%A3%B6.jpg",
+    "title": "鸟纹壶",
+    "dynasty": "战国后期",
+    "description": "这是一件典型的秦式壶，圆体，圈足，肩部饰二兽首衔环。有盖，盖上三钮，中央饰涡纹。器颈、肩、腹部浅雕鸟纹四周，并以弦纹作间隔。战国时期秦国铜壶在青铜器中的地位有明显的提高，中原式鼎与秦式壶相结合是这一时期富有特征的秦国青铜容器的基本组合形式。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%BD%A8%E6%95%A6.jpg",
+    "title": "轨敦",
+    "dynasty": "战国后期",
+    "description": "敦有盖，圆体，鼓腹，腹部有一对双兽面衔环耳，三短足。盖上饰三伏牺，盖顶有一活环钮，钮座处饰相间的叶状纹与圆涡纹。盖与器身各饰枝状纹二周。盖内铸有铭文“轨”字。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%9F%A0%E8%9E%AD%E7%BA%B9%E9%BC%8E.jpg",
+    "title": "蟠螭纹鼎",
+    "dynasty": "战国后期",
+    "description": "鼎形体较圆，有盖，大腹，双附耳，底承以三蹄形足。腹饰蟠螭纹两周，盖上有三伏牺形饰，另饰有蟠螭纹三周，耳两侧饰鸟纹。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%94%99%E9%87%91%E9%93%B6%E9%B8%9F%E7%BA%B9%E8%99%8E%E5%AD%90.jpg",
+    "title": "错金银鸟纹虎子",
+    "dynasty": "战国后期",
+    "description": "器扁圆，大腹，管状流，有鋬。通体饰金银丝镶嵌纹饰，腹部以鸟纹为主题纹饰，口部、腹下部饰V形连纹。器底部饰涡纹。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%9B%9B%E5%B1%B1%E7%BA%B9%E9%95%9C.jpg",
+    "title": "四山纹镜",
+    "dynasty": "战国后期",
+    "description": "铜镜细卷缘，弦钮，方钮座。钮座四角各伸出一片桃形叶子，相对应的近边缘处各饰四瓣花一朵，将镜面分成四等分，“山”字均匀地分布在每一等分内，山字右上侧靠近镜缘处各饰一片桃形叶子。以细小的蟠螭纹与羽状纹为地。山字纹是战国铜镜的特色纹饰。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%BF%9E%E5%BC%A7%E8%9E%AD%E5%87%A4%E7%BA%B9%E9%95%9C.jpg",
+    "title": "连弧螭凤纹镜",
+    "dynasty": "战国后期",
+    "description": "铜镜圆形，边缘作内向12弧相连，弦钮，圆形钮座。自钮座向外对称伸出四片叶状纹，外环以螭龙、凤鸟各一对，龙回首张口，舞足摆尾，凤长翅伸展，身体倒卷。地纹为菱形格内满铺碎点、云纹。此铜镜主题图案突出，各层纹饰相互呼应，气势连贯，表现出战国时期抽象与写实的装饰图案并用的意趣。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%87%A4%E9%B8%9F%E7%BA%B9%E9%95%9C.jpg",
+    "title": "凤鸟纹镜",
+    "dynasty": "战国后期",
+    "description": "呈铜镜圆形，外缘为素面低卷沿，弦钮，方形钮座。4只回首的凤鸟各占踞钮座一角，尾羽高扬舒展，呈流畅的“S”形线条。四凤之间沿镜内缘各伸出一花枝形图案，上立一短尾小鸟。铜镜的地纹为布满碎点的连续山字纹并间以云纹。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E4%B8%89%E5%8D%81%E4%BA%94%E5%B9%B4%E8%99%92%E4%BB%A4%E9%BC%8E.jpg",
+    "title": "三十五年虒令鼎",
+    "dynasty": "战国后期",
+    "description": "鼎为圆体，双附耳，三蹄形足，有盖，盖上饰三钮。器腹部以一棱状突起为饰。盖、器各有铭文2行18字，对铭：“卅五年，虒令赒共、视事、冶期铸。容半齍。下官。”铭文大意：记在三十五年，虒地县令赒共监造，视事主造，冶期铸此鼎，鼎之容量为半齍，置于下官。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E7%B2%9F%E7%BA%B9%E6%96%B9%E5%A3%B6.jpg",
+    "title": "粟纹方壶",
+    "dynasty": "战国后期",
+    "description": "壶体作正方形，肩部有四兽首衔环，方圈足。颈饰蕉叶纹，肩饰蟠螭纹一周，腹部饰粟纹，以三周几何云纹相隔，圈足亦饰粟纹及几何云纹。此壶为清宫旧藏文物，原藏颐和园。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%85%BD%E7%BA%B9%E5%8C%95.jpg",
+    "title": "兽纹匕",
+    "dynasty": "战国后期",
+    "description": "平勺长柄，微曲。通体饰有花纹，主体部位饰一兽纹，柄饰鱼纹。纹饰均为极细的单线刻成。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%94%99%E9%87%91%E5%B5%8C%E6%9D%BE%E7%9F%B3%E6%A8%BD.jpg",
+    "title": "错金嵌松石樽",
+    "dynasty": "战国后期",
+    "description": "樽筒形，有环鋬，扳作鸟形，平底，三兽足，足上端为兽首。器通身以绿松石镶嵌成菱形、三角形纹饰，再以细线菱形错杂其间，细线菱形之上下角错金为饰。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%85%AB%E5%B9%B4%E7%9B%B8%E9%82%A6%E5%BB%BA%E4%BF%A1%E5%90%9B%E9%93%8D.jpg",
+    "title": "八年相邦建信君铍",
+    "dynasty": "战国后期",
+    "description": "铍，长锋，脊扁平，茎上有一圆穿。一面脊上刻铭文2行19字，铭文大意：记在八年，宰相建信君监造，邦左库工师段主造，冶工尹铸造。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%9B%A2%E8%8A%B1%E7%BA%B9%E9%BC%8E.jpg",
+    "title": "团花纹鼎",
+    "dynasty": "战国后期",
+    "description": "鼎为圆体，双附耳，三足，有盖。盖上饰三伏牺及团花纹两周，三伏牺间以回纹相连。器身饰回纹、团花纹各二周。附耳两面饰回纹，两侧饰双兽纹。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%8C%8F%E5%BD%A2%E5%A3%B6.jpg",
+    "title": "匏形壶",
+    "dynasty": "战国后期",
+    "description": "壶为匏形，腹上有一活动提柄，圈足，有盖，盖上有一桶状凸口。通体无纹饰。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E4%BA%8C%E5%B9%B4%E7%9B%B8%E9%82%A6%E6%98%A5%E5%B9%B3%E4%BE%AF%E9%93%8D.jpg",
+    "title": "二年相邦春平侯铍",
+    "dynasty": "战国后期",
+    "description": "铍，长锋，脊扁平，茎上有一圆穿。一面脊上刻铭文2行19字，铭文大意：记在二年，宰相春平侯监造，邦左库工师赵瘠主造，冶事开铸造。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%8C%B6%E8%8A%B1%E7%BA%B9%E6%95%A6.jpg",
+    "title": "茶花纹敦",
+    "dynasty": "战国后期",
+    "description": "敦圆体，有双兽首衔环耳和三短足。器盖饰有三伏牺，并饰六瓣茶花纹二周，以蟠螭纹一周相隔，腹部上下各饰蟠螭纹一周，中饰六瓣茶花纹。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%93%B8%E5%AE%A2%E7%9B%89.jpg",
+    "title": "铸客盉",
+    "dynasty": "战国后期",
+    "description": "盉圆体，鼓腹，有流，流作兽首形，三铁铸短足，有盖，有梁，梁两端饰兽首，梁与盖之间以二铁环相连。盖、腹上部饰细羽状纹。盖外侧、器口旁各有刻划对铭1行7字：“铸客为集『0043』为之。”铭文大意：外方冶铸匠人为供王之饮食酒馔的机构做此盉。此盉为1933年安徽寿县朱家集出土。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E8%9B%99%E7%BA%BD%E8%9E%AD%E7%BA%B9%E9%93%9C%E9%98%B3%E7%87%A7.jpg",
+    "title": "蛙纽螭纹铜阳燧",
+    "dynasty": "战国后期",
+    "description": "凹面，凸背，蛙形纽，环纽饰四双身蟠螭。阳燧素缘。阳燧是指用铜或铜合金做成的铜鉴状器物，其状为一个凹面镜，当它面向太阳时，光线先直射在凹面上，再从不同角度反射出来。古人认为阳燧有辟邪作用。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%AD%8F%E9%BC%8E.jpg",
+    "title": "魏鼎",
+    "dynasty": "战国后期",
+    "description": "鼎圆体，敛口，三蹄形足，双附耳，有盖，盖上饰三环钮。器口、腹、盖上铸有铭文19字：“（盖）：‘三斤十一两。’（器口）：‘魏三斗一升，二十三斤。’（器身）：‘囗三斗一升。’”"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%8D%81%E4%B8%83%E5%B9%B4%E7%9B%B8%E9%82%A6%E6%98%A5%E5%B9%B3%E4%BE%AF%E9%93%8D.jpg",
+    "title": "十七年相邦春平侯铍",
+    "dynasty": "战国后期",
+    "description": "铍长锋，脊扁平，扁茎，茎上有一圆穿。一面脊上有刻画铭文2行20字：“十七年相邦春平侯，邦左伐器工师长『0041』，冶汱执剂。”另一面刻5字：“大攻尹韩囗。”铭文大意：记在十七年，宰相春平侯监造，邦左伐器工师长主造，冶工汱铸造。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%A4%A7%E5%BA%9C%E7%9B%8F.jpg",
+    "title": "大府盏",
+    "dynasty": "战国后期",
+    "description": "盏作半圆形，三兽足，双圈耳，足作虺形，虺首着地。器口上有铭文5字：“大府之馈盏。”铭文记此器是大府所用。此盏造型及体积均与青铜敦近似，当为盛食器。此盏为1933年安徽寿县朱家集出土。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E6%A5%9A%E7%8E%8B%E9%85%93%E8%83%90%E9%BC%8E.jpg",
+    "title": "楚王酓胐鼎",
+    "dynasty": "战国后期",
+    "description": "鼎圆体，三蹄形足，双附耳，有盖，盖上有三短足，盖正中一钮凸起可穿环。附耳、盖与鼎身饰细碎的蟠虺纹，足上端饰兽首。盖内、外，器口沿三处刻有铭文19字，铭文记楚王酓胐铸造此鼎，以供岁祭之用，置于集厨。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%AD%8F%E5%85%AC%E6%89%81%E5%A3%B6.jpg",
+    "title": "魏公扁壶",
+    "dynasty": "战国后期",
+    "description": "壶呈扁体，长方足，肩部饰双兽首衔环耳。通身饰方格纹，方格内饰羽状纹。器足外测有刻画铭文八字：“魏公三斗二升取”。"
+},
+
+        ];
+    
+        const itemsPerPage = 8;
+        let currentPage = 1;
+    
+        // 获取弹窗相关元素
+        const modal = document.getElementById("myModal");
+        const itemName = document.getElementById("itemName");
+        const itemImage = document.getElementById("itemImage");
+        const itemDynasty = document.getElementById("itemDynasty");        
+        const itemDescription = document.getElementById("itemDescription");
+    
+        // 获取关闭按钮元素
+        const span = document.getElementsByClassName("close")[0];
+    
+        // 点击关闭按钮关闭弹窗
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+    
+        // 点击弹窗外区域关闭弹窗
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    
+        // 显示图片的函数
+        function displayImages(page) {
+            const start = (page - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const content = document.getElementById('content');
+            content.innerHTML = '';
+    
+            images.slice(start, end).forEach(item => {
+                const a = document.createElement('a');
+                a.onclick = function(e) {
+                    e.preventDefault();
+                    itemName.textContent = item.title;
+                    itemImage.src = item.src;
+                    itemDynasty.textContent = `朝代：${item.dynasty}`;
+                    itemDescription.textContent = item.description;
+                    modal.style.display = "block";
+                };
+    
+                const img = document.createElement('img');
+                img.src = item.src;
+                img.className = "item-image";
+                img.alt = "图片无法加载";
+    
+                const title = document.createElement('div');
+                title.className = "item-introduction";
+                title.textContent = item.title;
+    
+                a.appendChild(img);
+                a.appendChild(title);
+                content.appendChild(a);
+            });
+    
+            updatePagination();
+        }
+    
+        // 更新分页信息
+        function updatePagination() {
+            const totalPages = Math.ceil(images.length / itemsPerPage);
+            document.getElementById('pageInfo').textContent = `${currentPage} / ${totalPages}`;
+            document.getElementById('prevBtn').disabled = currentPage === 1;
+            document.getElementById('nextBtn').disabled = currentPage === totalPages;
+        }
+    
+        // 切换页面
+        function changePage(offset) {
+            currentPage += offset;
+            displayImages(currentPage);
+        }
+    
+        // 初始化页面
+        displayImages(currentPage);
+    </script>
+</body>
+</html>

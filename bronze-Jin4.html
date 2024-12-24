@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/c/font_4731064_jvjmjota6g.css">
+    <title>春秋时期青铜器</title>
+    <style>
+        /* 重置样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            max-width: 375px;
+            margin: 0 auto;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            border: #888 solid 1px;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content {
+            flex: 1;
+            background-color: #faf8f8;
+            text-align: center; 
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        .content a {
+            width: 48%;
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 3%;
+            color: black;
+            text-decoration: none;
+            transition: transform 0.3s;
+            cursor: pointer;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .content a:hover {
+            transform: scale(1.05);
+        }
+
+        .item-image {
+            width: 100%;
+            object-fit: cover;
+            aspect-ratio: 1;
+        }
+
+        .item-introduction {
+            width: 100%;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 20px;
+        }
+
+        /* 底部导航栏样式 */
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+            box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-nav a {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            color: #333;
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .footer-nav a:hover {
+            color: #1AAD19;
+        }
+
+        .footer-nav a i {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .footer-nav a.active {
+            color: #ffbb00;
+        }
+
+        /* 底部分页样式 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .pagination span {
+            margin: 0 10px;
+        }
+
+        .pagination button {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .pagination button:disabled {
+            color: #ddd;
+            cursor: not-allowed;
+        }
+
+        /* 弹窗样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 375px;
+            border-radius: 10px;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .modal-content p {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <img src="https://yty93669.oss-cn-beijing.aliyuncs.com/青铜奇缘/bronze/单页标题" style="width:100%;height:auto">
+    <div style="width:100%;text-align: center;font-size: 20px;margin:10px 0">-春秋时期青铜器-</div>
+
+    <div class="content" id="content">
+        <!-- 图片内容将通过JavaScript动态添加 -->
+    </div>
+    
+    <!-- 分页按钮容器 -->
+    <div class="pagination" id="pagination">
+        <button id="prevBtn" onclick="changePage(-1)" disabled>&lt;</button>
+        <span id="pageInfo">1 / 1</span>
+        <button id="nextBtn" onclick="changePage(1)">&gt;</button>
+    </div>
+    
+    <div style="height: 80px;"></div>
+    
+    <!-- 底部导航栏 -->
+   <nav class="footer-nav">
+    <a href="https://meeting-bronze.github.io/index" >
+        <i class="iconfont icon-shouye"></i> <!-- 房子图标 -->
+        首页
+    </a>
+    <a href="https://meeting-bronze.github.io/bronze" class="active">
+        <i class="iconfont icon-pot"></i> <!-- 人物图标 -->
+        青铜器
+    </a>
+    <a href="https://meeting-bronze.github.io/products">
+        <i class="iconfont icon-gudai"></i> <!-- 加号图标 -->
+        文创产品
+    </a>
+    <a href="https://meeting-bronze.github.io/information">
+        <i class="iconfont icon-ziliaoku"></i> <!-- 对话框图标 -->
+        资料推荐
+    </a>
+    
+</nav>
+
+    
+    <!-- 弹窗 -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="itemName"></h2>
+            <img id="itemImage" src="" alt="图片无法加载">
+            <p id="itemDynasty"></p>
+            <p id="itemDescription"></p>
+        </div>
+    </div>
+    
+    <script>
+        // 图片数据
+        const images = [
+            {
+                src: "https://yty93669.oss-cn-beijing.aliyuncs.com/青铜奇缘/bronze/编钟",
+                title: "编钟",
+                dynasty: "春秋时期",
+                description: "编钟是中国古代大型打击乐器，由大小不同的铜钟按照音调高低排列而成。春秋时期的编钟铸造工艺精湛，音律和谐，是重要的礼乐器具。"
+            },
+            {
+                src: "https://yty93669.oss-cn-beijing.aliyuncs.com/青铜奇缘/bronze/蟠虺纹壶",
+                title: "蟠虺纹壶",
+                dynasty: "春秋时期",
+                description: "此壶器身装饰有蟠虺纹样，盘旋回环，气势磅礴。壶身造型优美，既可盛放液体，也是重要的礼器。"
+            },
+            {
+                src: "https://yty93669.oss-cn-beijing.aliyuncs.com/青铜奇缘/bronze/虎符",
+                title: "虎符",
+                dynasty: "春秋时期",
+                description: "虎符是古代军事指挥重要的信物，以青铜制成，形如虎形，可分为两半，是调兵遣将的重要凭证。"
+            },
+            {
+                src: "https://yty93669.oss-cn-beijing.aliyuncs.com/青铜奇缘/bronze/青铜剑",
+                title: "青铜剑",
+                dynasty: "春秋时期",
+                description: "春秋时期的青铜剑工艺达到了很高的水平，剑身修长，锋利无比，既是实战武器，也是身份的象征。"
+            },
+            {
+                src: "https://yty93669.oss-cn-beijing.aliyuncs.com/青铜奇缘/bronze/双凤纹盘",
+                title: "双凤纹盘",
+                dynasty: "春秋时期",
+                description: "盘面上饰有对称的双凤纹样，展翅欲飞，气势恢宏。工艺精美，是春秋时期青铜器艺术的代表作。"
+            },
+            {
+                src: "https://yty93669.oss-cn-beijing.aliyuncs.com/青铜奇缘/bronze/曾侯乙编钟",
+                title: "曾侯乙编钟",
+                dynasty: "春秋时期",
+                description: "曾侯乙编钟是中国出土的最完整的古代编钟，由65件青铜钟组成，音域跨度大，音色优美。"
+            },
+            {
+                src: "https://yty93669.oss-cn-beijing.aliyuncs.com/青铜奇缘/bronze/龙纹方壶",
+                title: "龙纹方壶",
+                dynasty: "春秋时期",
+                description: "壶身装饰有栩栩如生的龙纹，线条流畅，气韵生动。是春秋时期青铜器中的精品。"
+            },
+            {
+                src: "https://yty93669.oss-cn-beijing.aliyuncs.com/青铜奇缘/bronze/兽面纹鼎",
+                title: "兽面纹鼎",
+                dynasty: "春秋时期",
+                description: "鼎身装饰有狰狞威武的兽面纹，器型庄重，是重要的礼器，也反映了当时的铸造工艺水平。"
+            },
+            {
+                src: "https://yty93669.oss-cn-beijing.aliyuncs.com/青铜奇缘/bronze/蟠龙纹镜",
+                title: "蟠龙纹镜",
+                dynasty: "春秋时期",
+                description: "铜镜背面饰有蟠龙纹样，图案精美，制作精良，既是实用器具，也是艺术品。"
+            },
+            {
+                src: "https://yty93669.oss-cn-beijing.aliyuncs.com/青铜奇缘/bronze/凤鸟纹匜",
+                title: "凤鸟纹匜",
+                dynasty: "春秋时期",
+                description: "匜是古代盥洗用的水器，此器装饰有优美的凤鸟纹样，造型别致，展现了高超的铸造技艺。"
+            }
+        ];
+    
+        const itemsPerPage = 8;
+        let currentPage = 1;
+    
+        // 获取弹窗相关元素
+        const modal = document.getElementById("myModal");
+        const itemName = document.getElementById("itemName");
+        const itemImage = document.getElementById("itemImage");
+        const itemDynasty = document.getElementById("itemDynasty");        
+        const itemDescription = document.getElementById("itemDescription");
+    
+        // 获取关闭按钮元素
+        const span = document.getElementsByClassName("close")[0];
+    
+        // 点击关闭按钮关闭弹窗
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+    
+        // 点击弹窗外区域关闭弹窗
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    
+        // 显示图片的函数
+        function displayImages(page) {
+            const start = (page - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const content = document.getElementById('content');
+            content.innerHTML = '';
+    
+            images.slice(start, end).forEach(item => {
+                const a = document.createElement('a');
+                a.onclick = function(e) {
+                    e.preventDefault();
+                    itemName.textContent = item.title;
+                    itemImage.src = item.src;
+                    itemDynasty.textContent = `朝代：${item.dynasty}`;
+                    itemDescription.textContent = item.description;
+                    modal.style.display = "block";
+                };
+    
+                const img = document.createElement('img');
+                img.src = item.src;
+                img.className = "item-image";
+                img.alt = "图片无法加载";
+    
+                const title = document.createElement('div');
+                title.className = "item-introduction";
+                title.textContent = item.title;
+    
+                a.appendChild(img);
+                a.appendChild(title);
+                content.appendChild(a);
+            });
+    
+            updatePagination();
+        }
+    
+        // 更新分页信息
+        function updatePagination() {
+            const totalPages = Math.ceil(images.length / itemsPerPage);
+            document.getElementById('pageInfo').textContent = `${currentPage} / ${totalPages}`;
+            document.getElementById('prevBtn').disabled = currentPage === 1;
+            document.getElementById('nextBtn').disabled = currentPage === totalPages;
+        }
+    
+        // 切换页面
+        function changePage(offset) {
+            currentPage += offset;
+            displayImages(currentPage);
+        }
+    
+        // 初始化页面
+        displayImages(currentPage);
+    </script>
+</body>
+</html>

@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/c/font_4731064_jvjmjota6g.css">
+    <title>商朝青铜器</title>
+    <style>
+        /* 重置样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            max-width: 375px;
+            margin: 0 auto;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            border: #888 solid 1px;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content {
+            flex: 1;
+            background-color: #faf8f8;
+            text-align: center; 
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        .content a {
+            width: 48%;
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 3%;
+            color: black;
+            text-decoration: none;
+            transition: transform 0.3s;
+            cursor: pointer;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .content a:hover {
+            transform: scale(1.05);
+        }
+
+        .item-image {
+            width: 100%;
+            object-fit: cover;
+            aspect-ratio: 1;
+        }
+
+        .item-introduction {
+            width: 100%;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 20px;
+        }
+
+        /* 底部导航栏样式 */
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+            box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-nav a {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            color: #333;
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .footer-nav a:hover {
+            color: #1AAD19;
+        }
+
+        .footer-nav a i {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .footer-nav a.active {
+            color: #ffbb00;
+        }
+
+        /* 底部分页样式 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .pagination span {
+            margin: 0 10px;
+        }
+
+        .pagination button {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .pagination button:disabled {
+            color: #ddd;
+            cursor: not-allowed;
+        }
+
+        /* 弹窗样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 375px;
+            border-radius: 10px;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .modal-content p {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <img src="https://yty93669.oss-cn-beijing.aliyuncs.com/青铜奇缘/bronze/单页标题" style="width:100%;height:auto">
+    <div style="width:100%;text-align: center;font-size: 20px;margin:10px 0">-商朝青铜器-</div>
+
+    <div class="content" id="content">
+        <!-- 图片内容将通过JavaScript动态添加 -->
+    </div>
+    
+    <!-- 分页按钮容器 -->
+    <div class="pagination" id="pagination">
+        <button id="prevBtn" onclick="changePage(-1)" disabled>&lt;</button>
+        <span id="pageInfo">1 / 1</span>
+        <button id="nextBtn" onclick="changePage(1)">&gt;</button>
+    </div>
+    
+    <div style="height: 80px;"></div>
+    
+   <!-- 底部导航栏 -->
+   <nav class="footer-nav">
+    <a href="https://meeting-bronze.github.io/index" >
+        <i class="iconfont icon-shouye"></i> <!-- 房子图标 -->
+        首页
+    </a>
+    <a href="https://meeting-bronze.github.io/bronze" class="active">
+        <i class="iconfont icon-pot"></i> <!-- 人物图标 -->
+        青铜器
+    </a>
+    <a href="https://meeting-bronze.github.io/products">
+        <i class="iconfont icon-gudai"></i> <!-- 加号图标 -->
+        文创产品
+    </a>
+    <a href="https://meeting-bronze.github.io/information">
+        <i class="iconfont icon-ziliaoku"></i> <!-- 对话框图标 -->
+        资料推荐
+    </a>
+    
+</nav>
+
+    
+    <!-- 弹窗 -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="itemName"></h2>
+            <img id="itemImage" src="" alt="图片无法加载">
+            <p id="itemDynasty"></p>
+            <p id="itemDescription"></p>
+        </div>
+    </div>
+    
+    <script>
+        // 图片数据
+        const images = [
+        
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E7%BD%91%E7%BA%B9%E6%96%9D.jpg",
+    "title": "网纹斝",
+    "dynasty": "商代前期",
+    "description": "网纹斝形制较为原始，纹饰、铸造工艺均很粗糙，器壁很薄，具有商代前期的风格。腹饰网纹，网纹中饰乳钉纹，收购于1957年"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%85%BD%E9%9D%A2%E7%BA%B9%E6%96%9D.jpg",
+    "title": "兽面纹斝",
+    "dynasty": "商代前期",
+    "description": "兽面纹斝是商早期的青铜器，颈口侈大，口沿处有两根立柱，颈部下端环饰兽面纹，腹部呈圆弧状鼓出，弧形单柄，平底，三角形锥状三足"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%BC%A6%E7%BA%B9%E7%9B%89.jpg",
+    "title": "弦纹盉",
+    "dynasty": "商代前期",
+    "description": "弦纹盉形状较原始，其设计、铸造水平均不高，具有商代早期青铜器的特征。上部为半圆形，顶部有一倾斜的管状流，腹部整体作三个袋状尖足"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%85%BD%E9%9D%A2%E7%BA%B9%E6%96%B9%E5%A3%B6.jpg",
+    "title": "兽面纹方壶",
+    "dynasty": "商代前期",
+    "description": "兽面纹方壶壶体扁方，直颈，直口，颈两侧各有一环耳，长方圈足。颈部饰弦纹二道，肩、足各饰目雷纹一圈，腹饰兽面纹"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%85%BD%E9%9D%A2%E7%BA%B9%E7%88%B5.jpg",
+    "title": "兽面纹爵",
+    "dynasty": "商代前期",
+    "description": "兽面纹爵是故宫博物院现藏青铜器中时代最早的器物之一。爵椭圆体，口内侧有一圈唇边，长流，短尾，流口上有二小柱，腹饰兽面纹"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%85%BD%E9%9D%A2%E7%BA%B9%E5%B0%8A.jpg",
+    "title": "兽面纹尊",
+    "dynasty": "商代前期",
+    "description": "兽面纹尊的造型较特殊，既具尊的特征，又有罍的特点。尊、罍同为盛酒器，均束颈、大腹、高圈足，所不同的是尊大口，肩部无耳"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%8F%8B%E5%B0%8A.jpg",
+    "title": "友尊",
+    "dynasty": "商代后期",
+    "description": "尊侈口，束颈，圆体，鼓腹，圈足。口下饰一周叶形纹，颈饰两道圈带纹，间饰雷纹，腹部用雷纹作地，上面平雕九只象纹，足饰瓦纹，上有三个“十”字孔。器外底铸铭文“友”字，为该器作器者的家族名号。九只象纹是该器的主题纹饰，形象生动逼真，因此，该尊又称九象尊"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%85%BD%E9%9D%A2%E7%BA%B9%E5%A4%A7%E9%92%BA.jpg",
+    "title": "兽面纹大钺",
+    "dynasty": "商代后期",
+    "description": "兽面纹大钺是古代的一种武器，其上装饰有兽面纹，这种纹饰常见于商周时期的青铜器，象征着权威和力量"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E4%B8%89%E7%BE%8A%E5%B0%8A.jpg",
+    "title": "三羊尊",
+    "dynasty": "商代后期",
+    "description": "三羊尊是商代晚期的青铜器，以其肩部装饰的三只高浮雕形式的卷角羊头而著名。这件尊器物造型端庄富丽，制作精美，是我国古代青铜器的佳作之一"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%86%8C%E6%96%B9%E6%96%9D.jpg",
+    "title": "册方斝",
+    "dynasty": "商代后期",
+    "description": "盖上饰有兽面纹，口两侧各有一伞形方柱，柱上饰有齿形纹及云雷纹。腹部四面饰有兽面纹，间饰八个倒置的夔纹。器内底上的铭文“册”，代表族徽"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%8F%97%E8%A7%9A.jpg",
+    "title": "受觚",
+    "dynasty": "商代后期",
+    "description": "颈部饰有蕉叶纹，腰部饰兽面纹，腰与足之间有十字孔二及弦纹二道，足部镂空透雕兽面纹。铭文“受”字在足内壁上，受为族名。商代后期的青铜觚比前期觚高，口部逐渐增大，器身变细，十字孔变小，腰部、足部常有凸棱。商、周时期，青铜觚的足部饰镂空透雕纹饰较为罕见"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E4%B9%B3%E9%92%89%E4%B8%89%E8%80%B3%E7%B0%8B.jpg",
+    "title": "乳钉三耳簋",
+    "dynasty": "商代后期",
+    "description": "簋圆体，口沿外折，鼓腹，腹上有三兽耳，高圈足。颈部饰目雷纹，腹部以鞭形雷纹作衬托，饰乳钉纹。耳上兽首采用浮雕手法，雕刻精致，突出了装饰性，使三耳格外醒目。足上以六夔组成三组兽面纹。商代三耳簋较为少见"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E7%9F%A2%E5%A3%B6.jpg",
+    "title": "矢壶",
+    "dynasty": "商代后期",
+    "description": "矢壶是商代的青铜器，其特点是从口沿至足部共有6层纹饰，一、三、五层饰兽面纹，二、四、六层饰夔纹，双耳饰兽面纹。壶内底铸有“矢”字铭文，表明做器者的族名"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E7%94%B0%E5%91%8A%E6%96%B9%E9%BC%8E.jpg",
+    "title": "田告方鼎",
+    "dynasty": "商代后期",
+    "description": "田告方鼎是商代的青铜器，长方体，方口唇，双立耳，直壁，四柱足。口下饰兽面纹，腹上有三排乳钉纹，排列成“凹”形，足饰三角云纹。盖与器有对铭，各2行6字，铭文记田告为其母辛做祭器"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%8F%8C%E5%85%94%E8%BD%A6%E8%BB%8E.jpg",
+    "title": "双兔车軎",
+    "dynasty": "商代后期",
+    "description": "双兔车軎是西周时期的车饰，双兔立于軎筒之上，两兔反向，臀部相连，俯首曲腿，圆目，长耳，圆腹，腹中空，腹外饰云纹。軎筒两端的口径粗细不等，筒中部横向有一圆孔。车軎是古代车上的重要部件，用于固定车轮"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%85%BD%E9%9D%A2%E7%BA%B9%E7%B0%8B.jpg",
+    "title": "兽面纹簋",
+    "dynasty": "商代后期",
+    "description": "兽面纹簋是商代的青铜器，以其腹部装饰的兽面纹而知名"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E7%88%B6%E4%B8%81%E5%B0%8A.jpg",
+    "title": "父丁尊",
+    "dynasty": "商代后期",
+    "description": "父丁尊是商代的青铜器，以其腹部装饰的兽面纹而知名。尊是一种古代的盛酒器，通常用于祭祀等重要场合。父丁尊的具体尺寸和纹饰细节未在搜索结果中详细描述，但可以推测其为商代青铜器中的典型代表，体现了当时高超的铸造技术和艺术水平"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%8F%B2%E9%BC%8E.jpg",
+    "title": "史鼎",
+    "dynasty": "商代后期",
+    "description": "史鼎是商代的青铜器。这件鼎圆体，深腹，薄壁，平口沿外折，口沿上有双立耳。腹下三扁足，足作夔形，首朝上，尾部作支点。颈部饰兽面纹，无地纹。鼎是青铜礼器中最重要的一类器物，自考古学上的二里头文化时期开始出现，一直沿用至明清时代，是青铜器中流行时间最长的器物"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%AF%BD%E7%88%B6%E7%99%B8%E7%94%97.jpg",
+    "title": "寽父癸甗",
+    "dynasty": "商代后期",
+    "description": "寽父癸甗是商代后期的一件蒸饭器，具有显著的商代晚期甗的典型特征。这件甗通高48厘米，宽32.5厘米，侈口敛腹，甑较深，甑鬲连体，分裆柱足较细长。器内有三字铭文“寽父癸”，这可能表明了器物的主人或制造者的身份。甗是古代的一种食器，相当于今天使用的蒸锅，其腰部有箅子，下面盛水，通过蒸汽将食物蒸熟"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%85%BD%E9%9D%A2%E7%BA%B9%E8%A7%9A.jpg",
+    "title": "兽面纹觚",
+    "dynasty": "商代后期",
+    "description": "兽面纹觚是商代前期的青铜器，以其腰饰兽面纹而著名，形体较小，纹饰简单"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E4%BA%9A%E9%B8%9F%E5%87%BA%E6%88%9F%E8%A7%9A.jpg",
+    "title": "亚鸟出戟觚",
+    "dynasty": "商代后期",
+    "description": "觚喇叭口，腰和下部均有出戟装饰，圈足。器形高挑细长，中部明显收缩，具有商代后期铜觚的明显特征。觚身有许多精细的纹饰，从上至下分为四层：颈部饰以该时代流行的蕉叶纹；颈下端饰蛇纹，蛇头部宽大，眼睛突出；腰部及以下分饰两层兽面纹，显示出礼器所特有的高贵。底部有图形铭文，释为“亚鸟”，此觚因而得名亚鸟出戟觚。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%85%BD%E9%9D%A2%E7%BA%B9%E8%A7%92.jpg",
+    "title": "兽面纹角",
+    "dynasty": "商代后期",
+    "description": "角敞口，圆底，三角形锥状三足，无柱和鋬。器物最夸张的部位是大而外撇的敞口，自口部以下逐渐收缩至底部。主体纹饰为巨眼、长角、獠牙的兽面纹。在兽面鼻梁的位置有出戟装饰，铸造的十分细致精美。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E7%88%B6%E6%88%8A%E8%88%9F%E7%88%B5.jpg",
+    "title": "父戊舟爵",
+    "dynasty": "商代后期",
+    "description": "爵长圆腹，圜底，前流后尾，流侧有伞形柱，兽首扳，三锥形足。器身起扉棱，两面均饰兽面纹，辅以三角纹和雷纹。流外侧有铭文“父戊舟”，一柱上有铭文“作尊”，表明“舟”是这件青铜器的所有者，为祭祀“父戊”做此爵。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%AD%90%E5%B7%A5%E4%B8%87%E7%88%B5.jpg",
+    "title": "子工万爵",
+    "dynasty": "商代后期",
+    "description": "爵圜底，有流，有尾，三锥足，口上有二菌形柱，腹上有一兽首鋬。口、流、尾下均饰蕉叶纹，腹部饰兽面纹。鋬内有铭文“子工万”。“子”为爵称，是贵族男子的称谓；“工”表示负责管理工匠；“万”是族徽。此铭文表明“万”这个氏族是承担管理工匠之职的贵族。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%85%BD%E9%9D%A2%E7%BA%B9%E8%A7%A5.jpg",
+    "title": "兽面纹觥",
+    "dynasty": "商代后期",
+    "description": "觚是饮酒器。此器体形高而细，中段明显收缩，器身饰兽面纹，两段兽面纹之间仅有十字形而不穿孔，是商代晚期细腰觚的特点。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E4%BA%9A%E9%B8%9F%E5%AE%81%E7%9B%89.jpg",
+    "title": "亚鸟宁盉",
+    "dynasty": "商代后期",
+    "description": "盉圆口，深腹，下有三袋形足。盉盖与颈有链相连，盖顶有一菌形钮。器身前有一管状流，后有兽首鋬。盖、颈部饰兽面纹一周，流饰蝉纹，钮上饰火纹。鋬内有铭文6字“亚鸟宁从父丁”。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%8D%81%E5%AD%97%E6%B4%9E%E8%85%B9%E6%96%B9%E5%8D%A3.jpg",
+    "title": "十字洞腹方卣",
+    "dynasty": "商代后期",
+    "description": "卣圆口微侈，长颈，方腹，圈足。有盖，盖钮作立鸟状。卣肩两侧各铸一浮雕卧鸟，双鸟背向，尾上卷与卣的提梁相连。卣腹四面正中各有一方孔，形成四面穿透、内部相通的“十”字形孔洞。卣盖、器腹和圈足上以细密的云雷纹为地纹，均饰以兽面纹。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%B1%B1%E5%A6%87%E8%A7%AF.jpg",
+    "title": "山妇觯",
+    "dynasty": "商代后期",
+    "description": "觯侈口，束颈，鼓腹，圈足。有盖，盖顶有一菌状钮。钮上饰火纹，盖面饰乳丁雷纹一周，颈、足部饰夔纹。器内底有铭文“山妇”二字。“山妇”即“妇山”，表明此器的所有者是以“山”之族名作为自己私名的一位贵族身份的妇人。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E7%88%B6%E5%B7%B2%E8%A7%92.jpg",
+    "title": "父已角",
+    "dynasty": "商代后期",
+    "description": "角口部双尾呈凹弧形，底部为圜底，腹侧装有一兽首形状的鋬（把手），底部有三个锥形足。腹部装饰有兽面纹，这是商代青铜器常见的纹饰之一。在鋬内铸有铭文“父已”两字，表明这件青铜器是为祭祀自己的父亲“父已”而制作的。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E7%88%B6%E4%B9%99%E9%BC%8E.jpg",
+    "title": "父乙鼎",
+    "dynasty": "商代后期",
+    "description": "鼎圆形，双立耳，三柱足，腹起六道扉棱。鼎身饰三组兽面纹，足饰蕉叶纹。器内壁刻“作父乙□『0005』”5字铭文，表示做器者为自己死去的父亲名“父乙”者做此祭器。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E5%85%BD%E9%9D%A2%E7%BA%B9%E7%94%97.jpg",
+    "title": "兽面纹甗",
+    "dynasty": "商代后期",
+    "description": "甗侈口，双立耳，三蹄形足。颈、腹部起扉棱。颈部饰由夔纹组成的兽面纹，腹部饰变形三角形夔纹。三足上部饰长有牛角的大兽面纹，下部饰弦纹三道。此甗花纹精细，型体高大，为青铜甗中之较大者。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E4%BD%9C%E5%B0%8A%E5%BD%9D%E5%B0%8A.jpg",
+    "title": "作尊彝尊",
+    "dynasty": "商代后期",
+    "description": "尊圆体，侈口，直颈，深腹，圈足外撇。腹部饰三层纹饰：上层饰四牛纹，牛曲腿而卧，嘴微张，目视前方，二牛间各饰一个半浮雕兽首；中层饰四条锥形凸棱，间饰四只目纹，目纹四周为四瓣叶纹；下层饰单首双身龙纹。此尊通体纹饰均采用半浮雕艺术手法，无地纹衬托。器内底有铭文1行3字：“作尊彝”。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E7%BE%8A%E7%88%B6%E4%B8%81%E6%96%B9%E9%BC%8E.jpg",
+    "title": "羊父丁方鼎",
+    "dynasty": "商代后期",
+    "description": "鼎长方体，口沿外折，口上有双立耳，直壁，深腹，平底，腹下有四柱足。口下、腹部的四角及足上均有凸棱，腹部中央饰勾连雷纹，左右及下方各饰三道乳钉纹，口下和足部饰兽面纹。器内壁上有铭文1行4字：“作父丁。羊”。铭文记：为父亲丁做器。“羊”为族名。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E9%82%90%E7%B0%8B.jpg",
+    "title": "邐簋",
+    "dynasty": "商代后期",
+    "description": "圆腹，圈足，半圆形双兽耳，耳下各垂一小珥。颈前、后铸半浮雕对称二兽头，每三个兽头两侧各饰一夔纹，圈足上饰双夔合成的兽面纹，均匀地构成了四组兽面图案。器内底铸铭文3行19字，大意是：在辛巳这一天，商王在厅中宴请众官员，随后又在京地举行祭享典礼。邐可能因参与上述活动有功而被商王赏赐两串贝。为此作簋，用以纪念太子丁。"
+},
+{
+    "src": "https://yty93669.oss-cn-beijing.aliyuncs.com/%E9%9D%92%E9%93%9C%E5%A5%87%E7%BC%98/bronze/%E5%95%86/%E7%8E%89%E5%88%83%E7%9F%9B.jpg",
+    "title": "玉刃矛",
+    "dynasty": "商代后期",
+    "description": "矛由青铜柄和玉刃两部分组成。柄呈锥状，中空，两侧各有一系，一端有銎，另一端为桃形，有槽，叶形玉刃镶嵌其上。柄饰兽面纹及叶形纹。玉刃矛不是实战兵器，而是用于礼仪之器。青铜柄嵌玉刃矛保存完整者很少见。"
+},
+
+        ];
+    
+        const itemsPerPage = 8;
+        let currentPage = 1;
+    
+        // 获取弹窗相关元素
+        const modal = document.getElementById("myModal");
+        const itemName = document.getElementById("itemName");
+        const itemImage = document.getElementById("itemImage");
+        const itemDynasty = document.getElementById("itemDynasty");        
+        const itemDescription = document.getElementById("itemDescription");
+    
+        // 获取关闭按钮元素
+        const span = document.getElementsByClassName("close")[0];
+    
+        // 点击关闭按钮关闭弹窗
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+    
+        // 点击弹窗外区域关闭弹窗
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    
+        // 显示图片的函数
+        function displayImages(page) {
+            const start = (page - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const content = document.getElementById('content');
+            content.innerHTML = '';
+    
+            images.slice(start, end).forEach(item => {
+                const a = document.createElement('a');
+                a.onclick = function(e) {
+                    e.preventDefault();
+                    itemName.textContent = item.title;
+                    itemImage.src = item.src;
+                    itemDynasty.textContent = `朝代：${item.dynasty}`;
+                    itemDescription.textContent = item.description;
+                    modal.style.display = "block";
+                };
+    
+                const img = document.createElement('img');
+                img.src = item.src;
+                img.className = "item-image";
+                img.alt = "图片无法加载";
+    
+                const title = document.createElement('div');
+                title.className = "item-introduction";
+                title.textContent = item.title;
+    
+                a.appendChild(img);
+                a.appendChild(title);
+                content.appendChild(a);
+            });
+    
+            updatePagination();
+        }
+    
+        // 更新分页信息
+        function updatePagination() {
+            const totalPages = Math.ceil(images.length / itemsPerPage);
+            document.getElementById('pageInfo').textContent = `${currentPage} / ${totalPages}`;
+            document.getElementById('prevBtn').disabled = currentPage === 1;
+            document.getElementById('nextBtn').disabled = currentPage === totalPages;
+        }
+    
+        // 切换页面
+        function changePage(offset) {
+            currentPage += offset;
+            displayImages(currentPage);
+        }
+    
+        // 初始化页面
+        displayImages(currentPage);
+    </script>
+</body>
+</html>
